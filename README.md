@@ -2,4 +2,5 @@
 
 ## Team Members:
 
-* Tio, Bryan Ethan L. 
+* Tio, Bryan Ethan L.
+* Chu,chuan-chen
