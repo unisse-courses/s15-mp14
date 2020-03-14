@@ -1,0 +1,121 @@
+.bg-blue {
+    background-color: #87cefa;
+}
+
+.border-blue {
+    border: 1px solid #87ceeb ;
+}
+
+.hide {
+    display: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-size: cover;
+    background-image: url("../img/BG.png");
+}
+
+.rockwell {
+    font-family: "Rockwell";
+}
+
+.cg {
+    font-family: "Century Gothic";
+}
+
+.krabbypatty {
+    font-family: "Krabby Patty"
+}
+
+@font-face {
+    font-family: "Century Gothic";
+    src: url("../webfonts/CenturyGothic.woff");
+}
+
+@font-face {
+    font-family: "Krabby Patty";
+    src: url("../webfonts/Krabby Patty.ttf");
+}
+
+#login-icon {
+    background: none;
+    border: none;
+}
+
+.tab-content>.tab-pane {
+    height: 1px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+
+.tab-content>.active {
+    height: auto;
+    overflow: hidden;
+    visibility: visible;
+}
+
+#nav-tab {
+    font-family: "Rockwell";
+}
+
+.card-header {
+    font-family: "Rockwell";
+}
+
+.card{
+  background-color: #87ceeb ;/*#9DEAFE;*/
+    /* background-image: url("../img/counter_purple.png"); */
+}
+  
+.datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus, .datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus, .datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover {
+    color: #fff!important;
+    background-color: #563d7c!important;
+    border-color: #563d7c!important;
+}
+
+.datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active:active {
+    color: #fff!important;
+    background-color: #563d7c!important;
+    border-color: #563d7c!important;
+}
+
+#clear-button:hover{
+    color: #fff;
+    background-color: #dc3545!important;
+    border-color: #dc3545;
+}
+
+a {
+    color: #563d7c;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #573e7c;
+    border-color: #563d7c;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #563d7c;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    font-family: "Rockwell";
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #6F448A;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
