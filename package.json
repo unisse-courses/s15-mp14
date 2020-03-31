@@ -1,0 +1,24 @@
+{
+  "name": "s15-mp14",
+  "version": "1.0.0",
+  "description": "* Tio, Bryan Ethan L.\r * Chu,chuan-chen\r * Yao, Ryan Christian G.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unisse-courses/s15-mp14.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unisse-courses/s15-mp14/issues"
+  },
+  "homepage": "https://github.com/unisse-courses/s15-mp14#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.0",
+    "handlebars": "^4.7.3"
+  }
+}

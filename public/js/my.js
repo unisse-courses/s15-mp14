@@ -22,7 +22,6 @@ $('#login-btn').click(function() {
         $('#password').val("");
     }
 });
-
 function checkIfLoggedIn() {
 
     //get the value of the login flag from localStorage with the key "login"
@@ -47,16 +46,16 @@ function checkIfLoggedIn() {
 }
 
 //initial check if a user is logged in or not
-checkIfLoggedIn();
+//checkIfLoggedIn();
 
 //event handler for logout button
-$('#logout-btn').click(function() {
-    //if clicked, then clear the login flag from localStorage with the key "login"
-    localStorage.removeItem("login");
-    //after clearing the "login" key, run the login check
-    //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
-    checkIfLoggedIn();
-});
+// $('#logout-btn').click(function() {
+//     //if clicked, then clear the login flag from localStorage with the key "login"
+//     localStorage.removeItem("login");
+//     //after clearing the "login" key, run the login check
+//     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
+//     checkIfLoggedIn();
+// });
 
 //set the volume for the background music
 //get the document element
