@@ -19,7 +19,21 @@
             <th>Aiport of Arrival</th>
             <th>Flight number</th>
         </tr>
-    </thead>
+ </thead>
+        {{#each flights}}
+        <tr>
+            <td>{{company}}</td>
+            <td>{{deptdate}}</td>
+            <td>{{depttime}}</td>
+            <td>{{depta}}</td>
+            <td>{{num}}</td>
+            <td>{{company}}</td>
+            <td>{{arrivdate}}</td>
+            <td>{{timear}}</td>
+            <td>{{airp}}</td>
+            <td>{{num}}</td>
+        </tr>
+{{/each}}
 </table>
 </div>
 <button id='replace-button' type="button" class="btn mb-2 mr-2 rockwell" style="color: white; background-color: #b9b9b9; border-radius: 8px;">CREATE</button>
