@@ -39,8 +39,13 @@ app.get('/admin-home', function(req, res) {
 app.get('/admin-table', function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
+  
   res.render('admin-table', {
-    title: 'Welcome',
+    flights:[
+      {company:"Yao Airlines", deptdate : "April 1,2019" ,depttime:"11:00PM", depta:"NAIA Terminal 3" , num: "TIO_1123", arrivdate:"April 3, 2020" , timear:"11:00PM", airp:"TOKYO AIRLINES" },
+      {company:"Yao Airlines", deptdate : "April 4,2019" ,depttime:":100PM", depta:"NAIA Terminal 3" , num: "TIO_4432", arrivdate:"April 4, 2020" , timear:"4:00PM", airp:"KYOTO AIRLINES"}
+
+    ]
   })
 });
 
@@ -50,4 +55,9 @@ app.use(express.static('public'));
 // Listening to the port provided
 app.listen(port, function() {
   console.log('App listening at port '  + port)
+});
+
+
+app.post('/register', function (req, res){
+
 });
