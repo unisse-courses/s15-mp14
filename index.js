@@ -16,16 +16,16 @@ app.engine( 'hbs', exphbs({
   }));
   
 
-  app.set('view engine', 'hbs');
+app.set('view engine', 'hbs');
 
-  app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 app.get('/', function(req, res) {
     // The render function takes the template filename (no extension - that's what the config is for!)
     // and an object for what's needed in that template
-    res.render('admin-home', {
+    res.render('index', {
     })
 });
 app.get('/admin-home', function(req, res) {
