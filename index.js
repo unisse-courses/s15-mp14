@@ -59,5 +59,16 @@ app.listen(port, function() {
 
 
 app.post('/register', function (req, res){
-
+  var user = {
+    name: req.name,
+    initial: req.initial,
+    lname : req.lname,
+    addr: req.addr,
+    emadd: req.emadd,
+    password: req.password,
+    gender: req.gender,
+    birthday : req.birthday,
+    count : req.count
+};
+//Put db code here para ma regsiter
 });
