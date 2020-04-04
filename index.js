@@ -101,7 +101,7 @@ app.post('/addUserFlights', function(req, res){
     dep_time: req.body.dep_time,
     dep_port: req.body.dep_port,
     arv_date: req.body.arv_date,
-    arv_time: req.body.arv_time,
+    arv_time: req.body.arv_time, 
     dep_port: req.body.dep_port,
     plane_no: req.body.plane_no,
     adl_tcks: req.body.adl_tcks,
