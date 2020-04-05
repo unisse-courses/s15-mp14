@@ -152,9 +152,6 @@ $(document).ready(function() {
 //     //after clearing the "login" key, run the login check
 //     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
 //     checkIfLoggedIn();
-<<<<<<< HEAD
-$('#flightList').DataTable();
-=======
 
 $('#regForm').on('click','#addUser',function(){
     var name = $('#regname').val();
@@ -189,7 +186,6 @@ console.log(sex);
         }
     });
 });
->>>>>>> 4a4aa09f0188de140534d4da197b2c4b4cb7e0e4
 
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
