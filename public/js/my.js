@@ -185,7 +185,6 @@ console.log(sex);
     });
 });
 
-
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
     var deptdate = $('#credeptdate').val();
