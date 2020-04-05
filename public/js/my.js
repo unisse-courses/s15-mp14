@@ -145,22 +145,16 @@ $(document).ready(function() {
     }
 
 
-//event handler for logout button
-// $('#logout-btn').click(function() {
-//     //if clicked, then clear the login flag from localStorage with the key "login"
-//     localStorage.removeItem("login");
-//     //after clearing the "login" key, run the login check
-//     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
-//     checkIfLoggedIn();
-
 $('#regForm').on('click','#addUser',function(){
     var name = $('#regname').val();
     var initials = $('#regmid').val();
     var last = $('#reglast').val();
     var address = $('#regad').val();
     var email = $('#regEmail').val();
+    var username = $('#reguser').val();
     var pass = $('#regpass').val();
     var sex = $("input[name='sex']:checked").val();
+    var prov = $("input[name='choice']:checked").val();
     var bday = $('#regbday').val();
     var country = $("#regcount").val();
 console.log(sex);
@@ -170,10 +164,12 @@ console.log(sex);
         lname : last,
         addr: address,
         emadd: email,
+        username:username,
         password: pass,
         gender: sex,
         birthday : bday,
-        count : country
+        count : country,
+        provider: prov
     };
     $.post('addUser',newUser,function(data, status){
         if(data.success)
