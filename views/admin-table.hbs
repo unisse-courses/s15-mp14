@@ -9,6 +9,7 @@
     <thead>
         <tr>
             <th>Company</th>
+            <th>Destination</th>
             <th>Date of Departure</th>
             <th>Time of Departure</th>
             <th>Aiport of Departure</th>
@@ -20,25 +21,25 @@
             <th>Flight number</th>
         </tr>
  </thead>
-        {{#each flights}}
+      {{#each flights}}
         <tr>
-            <td>{{company}}</td>
-            <td>{{deptdate}}</td>
-            <td>{{depttime}}</td>
-            <td>{{depta}}</td>
-            <td>{{num}}</td>
-            <td>{{company}}</td>
-            <td>{{arrivdate}}</td>
-            <td>{{timear}}</td>
-            <td>{{airp}}</td>
-            <td>{{num}}</td>
+            <td>{{this.airport.Company}}</td>
+            <td>{{this.desti}}</td>
+            <td>{{this.deptdate}}</td>
+            <td>{{this.depttime}}</td>
+            <td>{{this.deptarea}}</td>
+            <td>{{this.flightnum}}</td>
+            <td>{{this.airport.Company}}</td>
+            <td>{{this.arrivdate}}</td>
+            <td>{{this.arrivtime}}</td>
+            <td>{{this.arrivport}}</td>
+            <td>{{this.flightnum}}</td>
         </tr>
-{{/each}}
+{{/each}} 
 </table>
 </div>
-<button id='replace-button' onclick="window.location.href ='/CreateFlights';" type="button" class="btn mb-2 mr-2 rockwell" style="color: white; background-color: #b9b9b9; border-radius: 8px;">CREATE</button>
-<button id='merge-button' type="button" class="btn mb-2 mr-2 rockwell" style="color: white;background-color: #b9b9b9; border-radius: 8px;">DELETE</button>
-<button id='clear-button' type="button" class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;">EDIT</button>
-
+<button id='replace-button' onclick="window.location.href ='/CreateFlights';" type="button" class="btn mb-2 mr-2 rockwell" style="color: white; background-color: #b9b9b9; border-radius: 8px;">Create Flights</button>
+<button id='merge-button'onclick="window.location.href ='/EditFlights';" type="button" class="btn mb-2 mr-2 rockwell" style="color: white;background-color: #b9b9b9; border-radius: 8px;">EDIT FLIGHT</button>
+<button id='clear-button' type="button" class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;">DELETE ALL</button>
 </div>
 </div>

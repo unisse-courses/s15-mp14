@@ -11,11 +11,15 @@ const options = { useNewUrlParser: true,
 mongoose.connect(databaseURL, options)
 
 const FlightSchema = new mongoose.Schema({
- deptdate: {type:String, required: true, },
+ deptdate: {type:String, default: Date.now },
  depttime: { type : String, required : true} ,
  deptarea: { type : String, required : true} ,
- arrivdate: { type : String, required : true} ,
-arrivtime: { type : String, required : true}
+ desti: {type:String, required:true },
+ arrivdate: { type : String ,default: Date.now} ,
+arrivtime: { type : String, required : true},
+arrivport: {type:String, required:true},
+flightnum: {type:String, required:true},
+airport: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 });
 
