@@ -143,38 +143,7 @@ $(document).ready(function() {
             
             parentDiv.append(btndelete);
     }
-    document.getElementById('upload').onclick = function(){
-        var files = document.getElementById('uploaer').files;
-        console.log(files);
-        if (files.length <= 0) {
-            return false;
-          }
-          var fr = new FileReader();
-  
-          fr.onload = function(e) { 
-          console.log(e);
-            var result = JSON.parse(e.target.result);
-            var formatted = JSON.stringify(result, null, 2);
-            
-          $.post('addFlight',formatted,function(data,staus){
-            if(data.success)
-            {
-            alert(data.message)
-            window.location.assign("/admin-table");
-            }
-            else{
-                alert(data.message);
-            }
-          });
-          }
-          fr.readAsText(files,item(0))
-        };
 
-        $('#clear').click(function(){
-            document.getElementById("uploader").value = "";
-        });
-//initial check if a user is logged in or not
-//checkIfLoggedIn();
 
 //event handler for logout button
 // $('#logout-btn').click(function() {
@@ -183,6 +152,41 @@ $(document).ready(function() {
 //     //after clearing the "login" key, run the login check
 //     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
 //     checkIfLoggedIn();
+
+$('#regForm').on('click','#addUser',function(){
+    var name = $('#regname').val();
+    var initials = $('#regmid').val();
+    var last = $('#reglast').val();
+    var address = $('#regad').val();
+    var email = $('#regEmail').val();
+    var pass = $('#regpass').val();
+    var sex = $("input[name='sex']:checked").val();
+    var bday = $('#regbday').val();
+    var country = $("#regcount").val();
+console.log(sex);
+    var newUser = {
+        name: name,
+        initial: initials,
+        lname : last,
+        addr: address,
+        emadd: email,
+        password: pass,
+        gender: sex,
+        birthday : bday,
+        count : country
+    };
+    $.post('addUser',newUser,function(data, status){
+        if(data.success)
+        {
+        alert(data.message)
+        window.location.assign("/");
+        }
+        else{
+            alert(data.message);
+        }
+    });
+});
+
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
     var deptdate = $('#credeptdate').val();
@@ -225,40 +229,6 @@ $.post('addFlight', newFlight, function(data,status){
 });
 });
 
-    $('#adddUser').click(function(){
-        var name = $('#regname').val();
-        var initials = $('#regmid').val();
-        var last = $('#reglast').val();
-        var address = $('#regad').val();
-        var email = $('regEmail').val();
-        var pass = $('regpass').val();
-        var sex = $("input[name='gender']:checked").val();
-        var bday = $('#regbday').val();
-        var country = $("#regcount").val();
-    
-        var newUser = {
-            name: name,
-            initial: initials,
-            lname : last,
-            addr: address,
-            emadd: email,
-            password: pass,
-            gender: sex,
-            birthday : bday,
-            count : country
-        };
-        $.post('register',newUser,function(data, status){
-            if(data.success)
-            {
-            alert(data.message)
-            window.location.assign("/admin-table");
-            }
-            else{
-                alert(data.message);
-            }
-        });
-    });
-
 
     $('#planeForm').on('click','#addPlane',function(){
             var comp = $("#crecomp").val();
@@ -284,6 +254,7 @@ $.post('addFlight', newFlight, function(data,status){
     
      
 
+    $('flightList').DataTable();
     $('#burger-sales-by-specie-table').DataTable();
 
     $('#clear-button').click(function() {
@@ -384,6 +355,35 @@ $.post('addFlight', newFlight, function(data,status){
              refreshCharts();
          }*/
          
-     
+         $('#upload').click(function(){
+            var files = document.getElementById('uploaer').files;
+            console.log(files);
+            if (files.length <= 0) {
+                return false;
+              }
+              var fr = new FileReader();
+      
+              fr.onload = function(e) { 
+              console.log(e);
+                var result = JSON.parse(e.target.result);
+                var formatted = JSON.stringify(result, null, 2);
+                
+              $.post('addFlight',formatted,function(data,staus){
+                if(data.success)
+                {
+                alert(data.message)
+                window.location.assign("/admin-table");
+                }
+                else{
+                    alert(data.message);
+                }
+              });
+              }
+              fr.readAsText(files,item(0))
+            });
+    
+            $('#clear').click(function(){
+                document.getElementById("uploader").value = "";
+            });
 });
    
