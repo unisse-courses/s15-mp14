@@ -14,9 +14,9 @@ const UserSchema = new mongoose.Schema({
         lname :{ type : String, required : true} ,
         addr: { type : String, required : true} ,
         emadd:{ type: String, required : true} ,
-        password: { type : Number, required : true} ,
+        password: { type : String, required : true} ,
         gender: { type : String, required : true} ,
-        birthday :{ type : Date, required : true} ,
+        birthday :{ type : String, required : true} ,
         count : { type : String, required : true} 
 });
 

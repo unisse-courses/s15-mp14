@@ -1,5 +1,7 @@
-{{> nav2}}
-	<form>
+ {{> nav-main}}
+  <div class="mx-3">
+ <div class="card-body cg" style="background: #87cefa;">
+	<form id= "regForm">
 		<div class="form-group row">
 	  <label for="regname" class="col-sm-1 col-form-label">First Name: </label>
 	  <div class="col-sm-4">
@@ -21,7 +23,7 @@
 	<div class="form-group row">
 	 <label for="regdad" class="col-sm-1 col-form-label">Address:</label>
 	 <div class="col-sm-4">
-		<input type ="Address" name="Address" class="form-control"id="redad" placeholder="12345 Main St. Manila City">
+		<input type ="text" name="Address" class="form-control"id="regad" placeholder="12345 Main St. Manila City">
 	</div>
 	</div>
 	<div class="form-group row">
@@ -41,11 +43,11 @@
 	<legend class="col-form-label col-sm-1 pt-0">Sex</legend>
       <div class="col-sm-10">
         <div class="form-check">
-		<input type="radio"class="form-check-input" name="sex" value="Male" id="radio1" >
+		<input  type="radio"  name='sex' class="form-check-input"value="Male" >
 		<label class="form-check-label" for ="radio1">Male</label>
         </div>
 		<div class="form-check">
-		<input type="radio"class="form-check-input" name="sex" value="Female" id="radio2" >
+		<input type="radio" name='sex'class="form-check-input"  value="Female"  >
 		<label class="form-check-label" for ="radio2">Female</label>
 	</div>
 	</div>
@@ -54,13 +56,13 @@
 	  <div class="form-group row">
     <label for="regbday" class="col-sm-1 col-form-label">Birthday:</label>
 	<div class="col-sm-2">
-	  <input type="date" class="form-control" name="bday" i = "regbday">
+	  <input type="date" class="form-control" name="bday" id = "regbday">
 	</div>
 	</div>
 	<div class = "form-group row">
 		<label for="regcount" class="col-sm-1 col-form-label">Country </label>
 		<div class ="col-sm-2">
-		<select id="country" name="country" class="form-control" id = 'regcount'>
+		<select name="country" class="form-control" id = 'regcount'>
 			<option value="Afghanistan">Afghanistan</option>
 			<option value="Åland Islands">Åland Islands</option>
 			<option value="Albania">Albania</option>
@@ -314,6 +316,5 @@
 	<button type="button" id= "addUser" class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;">CREATE USER</button>
 
  </form>
-</div>
-     
+ </div>
 </div>

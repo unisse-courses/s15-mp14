@@ -8,6 +8,7 @@ const app = express();
 const port = 9090;
 
 const flightsModel = require('./models/flights');
+const planeModel = require('./models/airplanes');
 const userModel = require('./models/users');
 
 app.engine( 'hbs', exphbs({
@@ -23,32 +24,25 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(express.static('public'));
-
 app.get('/', function(req, res) {
-     // The render function takes the template filename (no extension - that's what the config is for!)
-     // and an object for what's needed in that template
-     res.render('login', {
-     })
+  res.render('login', {
+  })
 });
+
 app.get('/admin-home', function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
   res.render('admin-home', {
     title: 'Welcome',
   })
 });
 
 app.get('/admin-table', function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  
-  res.render('admin-table', {
-    flights:[
-      {company:"Yao Airlines", deptdate : "April 1,2019" ,depttime:"11:00PM", depta:"NAIA Terminal 3" , num: "TIO_1123", arrivdate:"April 3, 2020" , timear:"11:00PM", airp:"TOKYO AIRLINES" },
-      {company:"Yao Airlines", deptdate : "April 4,2019" ,depttime:":100PM", depta:"NAIA Terminal 3" , num: "TIO_4432", arrivdate:"April 4, 2020" , timear:"4:00PM", airp:"KYOTO AIRLINES"}
-
-    ]
-  })
+  flightsModel.find({}).sort({flightnum : 1}).populate('airport').exec(function(err, result){
+    var flightObjects =[];
+    result.forEach(function(doc){
+      flightObjects.push(doc.toObject());
+    });
+    res.render('admin-table',{flights: flightObjects});
+  });
 });
 
 app.get('/client-home',function(req,res){
@@ -70,15 +64,154 @@ app.get('/CreateFlights',function(req,res){
  })
 
 app.post('/addFlight', (req,res) => {
-  console.log(req.body)
-  var flight = new flightsModel ({
-    deptdate: req.body.ddate,
-    depttime: req.body.dtime,
-    deptarea: req.body.deptairport,
-    arrivdate: req.body.adate,
-    arrivtime: req.body.artime
-  
+  planeModel.findOneAndUpdate(req.body.port, {
+    $set: {"Company":req.body.port.comp,"PlaneNum":req.body.port.flightnum}},{new:true, upsert:true, strict:false},function(err, plane){
+      const planeid = plane._id
+      var flight = new flightsModel ({
+        deptdate: req.body.ddate,
+        depttime: req.body.dtime,
+        deptarea: req.body.deptairport,
+        desti: req.body.destination,
+        arrivdate: req.body.adate,
+        arrivtime: req.body.artime,
+        arrivport: req.body.aport,
+        flightnum:req.body.flight,
+        airport: planeid
+      
+    });
+    flight.save(function(err, flight){
+      var result;
+      if(err){  
+        console.log(err.message);
+        result = {success: false, message:"Flight was not created"}
+        res.send(result)
+      }
+      else{
+        console.log(flight);
+        result={success:true, message:"Flight Created!"}
+      res.send(result);
+      }
+    });
+    });
+    });
+  app.post('/addFlights',(req,res) =>{
+      flightsModel.insertMany(req.body,function(err,result){
+        if(err)
+          res.send('Error');
+          else{
+            res.send('Success');
+          }
+      })
+  })
+
+
+// Listening to the port provided
+app.listen(port, function() {
+  console.log('App listening at port '  + port)
 });
+
+
+app.get('/register',function(rq,res){
+  res.render('register',{});
+});
+app.post('/addUser', function (req, res){
+
+  var user = new userModel({
+    name: req.body.name,
+    initial: req.body.initial,
+    lname :req.body.lname,
+    addr: req.body.addr,
+    emadd: req.body.emadd,
+    password: req.body.password,
+    gender: req.body.gender,
+    birthday : req.body.birthday,
+    count : req.body.count
+});
+
+user.save(function(err, user){
+  var result;
+  if(err){  
+    console.log(err.message);
+    result = {success: false, message:"User was not created"}
+    res.send(result)
+  }
+  else{
+    console.log(user);
+    result={success:true, message:"User Created!"}
+  res.send(result);
+  }
+});
+
+}); 
+
+app.get('/EditFlights',function(req,res){
+  res.render('editflights');
+});
+app.post('/searchFlight',function(req,res){
+  var pattern = "^" + req.body.fnum
+  flightsModel.find({flightnum: {$regex: pattern}}, function(err, flight){
+    res.send(flight);
+  })
+})
+
+app.post('/updateFlight', function(req,res){
+    var filter = {
+      flightnum: req.body.num
+    };
+    var ddate = req.body.ddate;
+    var dtime = req.body.dtime;
+    var darea = req.body.dport;
+    var adate = req.body.adate;
+    var atime = req.body.atime;
+    var aport = req.body.aport;
+    var update = {
+      $set : {
+        deptdate: ddate,
+        depttime: dtime,
+        deptarea: darea,
+        arrivdate: adate,
+        arrivtime: atime,
+        arrivport: aport
+      }
+    };
+    flightsModel.updateOne(filter,update,function(err,result){
+      if(err) throw err;
+      res.send(result);
+    });
+
+
+});
+
+
+app.post('/deleteFlight',function(req,res){
+  var filter = {
+    flightnum : req.body.num
+  };
+
+
+  flightsModel.deleteOne(filter,function(err,result){
+    if(err) throw err;
+
+    console.log(result);
+
+  })
+});
+app.post('/deleteAll',function(req,res){
+
+  flightsModel.deleteMany(({}),function(err,result){
+    if(err) throw err;
+
+    console.log(result);
+
+  })
+});
+
+app.get('/client-home',function(req,res){
+  res.render('client-home',{
+
+  });
+  
+})
 
 app.post('/addUserFlights', function(req, res){
 
@@ -96,107 +229,5 @@ app.post('/addUserFlights', function(req, res){
   }
 })
 
-flight.save(function(err, flight){
-  var result;
-  if(err){  
-    result = {success: false, message:"Flight was not created"}
-    res.send(result)
-  }
-  else{
-    console.log(flight);
-    result={success:true, message:"Flight Created!"}
-  res.send(result);
-  }
-});
-});
 
-
-// Listening to the port provided
-app.listen(port, function() {
-  console.log('App listening at port '  + port)
-});
-
-app.get('/register',function(rq,res){
-  res.render('register',{});
-});
-/* app.post('/register', function (req, res){
-
-  var user = new userModel({
-    name: req.name,
-    initial: req.initial,
-    lname : req.lname,
-    addr: req.addr,
-    emadd: req.emadd,
-    password: req.password,
-    gender: req.gender,
-    birthday : req.birthday,
-    count : req.count
-});
-
-user.save(function(err, user){
-  var result;
-  if(err) {
-    console.log(err.errors);
-    res.send(user);
-  }
-})
-console.log(user);
-//Put db code here para ma regsiter
-}); */
-/*
-This code is for adding flights that does not require the database
-
-app.post('/addAirplane', function (req, res){
-  var plane = new airplaneModel {
-    comp : req.comp,
-    plane : req.plane
-  }
-
-  //put db code here
-  plane.save(fcuntion(err, plane){
-    res.send(plane);
-  });
-};
-console.log(user);
-//Put db code here para ma regsiter
-});
-*/
-// app.post('/addFlight', function (req, res){
-//   console.log(req);
-//   var flight = new Flightsmodel ({
-//     deptdate: req.ddate,
-//     depttime: req.dtime,
-//     deptarea: req.deptairport,
-//     arrivdate: req.adate,
-//     arrivtime: req.atime
-  
-// });
-// flight.save(function(err, flight){
-//   var result;
-//   if(err){
-//     console.log(err.errors);
-//     result = {success: false, message:"Flight was not created"}
-//     res.send(result)
-//   }
-//   else{
-//     console.log(flight);
-//     result={success:true, message:"Flight Created!"}
-//   res.send(result);
-//   }
-// });
-// });
-
-/*
-IMPORTANT: PUT CODE THAT WILL READ FILE AND PUT THE CONTENTS OF THE FILE IN THE DATABASE
-
-TODO CHECKLIST:
-REGISTER USER
-ADD FLIGHTS
-ADD AIRPLANES
-ADD FUNCTIONALITIES
-FINALIZE DATABASE (TO BE DONE TODAY - Apirl 3)
-
-may lalabas dpat na pop up na see available airplanes
-
-*/
 
