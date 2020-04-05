@@ -10,6 +10,8 @@ $(document).ready(function() {
 //     //after clearing the "login" key, run the login check
 //     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
 //     checkIfLoggedIn();
+$('#flightList').DataTable();
+
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
     var deptdate = $('#credeptdate').val();

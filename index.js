@@ -58,6 +58,11 @@ app.get('/client-home',function(req,res){
   
 })
 
+app.get('/client-table', function(req, res){
+  res.render('client-table',{
+  });
+})
+
 app.get('/CreateFlights',function(req,res){
 // code to getting data from db here
   res.render('flights', {
