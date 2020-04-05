@@ -1,273 +1,112 @@
 
-<div class="mx-3">
-    <br />
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card" style="border: 1px solid #87cefa;">
-                <div class="card-header text-white bg-purple">Dashboard <span class="fa fa-wrench"></span></div>
-                <div class="card-body">
-                    {{> client_nav}}
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-charts" role="tabpanel"
-                            aria-labelledby="nav-charts-tab">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <form class="form-block">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 100px;">From:</td>
-                                                <td>
-                                                    <select name="DEPARTURE_AREA_1" id="deparea1" class="fromSelectForm"
-                                                        style="width:150px;">
-                                                        <optgroup label="PH" style="color: rgb(0, 0, 0);">
-                                                            <option value="PH">Philippines</option>
-                                                        </optgroup>
-                                                        <optgroup label="South East Asia/South Asia/Oceania"
-                                                            style="color: rgb(0, 0, 0);">
-                                                            <option value="AU">Australia</option>
-                                                            <option value="SG">Singapore</option>
-                                                            <option value="ID">Indonesia</option>
-                                                            <option value="JPN">Japan</option>
-                                                            <option value="IN">India/Sri Lanka</option>
-                                                            <option value="MY">Malaysia</option>
-                                                            <option value="VN">Vietnam</option>
-                                                            <option value="TH">Thailand/Cambodia/Myanmar/Laos/Bangladesh
-                                                            </option>
-                                                        </optgroup>
-                                                        <optgroup label="East Asia" style="color: rgb(0, 0, 0);">
-                                                            <option value="EAST_ASIA">East Asia</option>
-                                                        </optgroup>
-                                                        <optgroup label="Europe" style="color: rgb(0, 0, 0);">
-                                                            <option value="GB">United Kingdom</option>
-                                                            <option value="IE">Ireland</option>
-                                                            <option value="FR">France</option>
-                                                            <option value="DE">Germany</option>
-                                                            <option value="FI">Finland</option>
-                                                            <option value="NL">Netherlands/Scandinavia/Baltic
-                                                                States/Iceland</option>
-                                                            <option value="BE">Belgium/Luxembourg</option>
-                                                            <option value="ES">Spain/Portugal</option>
-                                                            <option value="IT">Italy</option>
-                                                            <option value="AE">Midivive East/Africa</option>
-                                                            <option value="AT">Austria/Central Europe/Eastern Europe
-                                                            </option>
-                                                            <option value="CH">Switzerland</option>
-                                                            <option value="RU">Russia</option>
-                                                        </optgroup>
+{{> client_nav}}
+<div class="tab-content" id="nav-tabContent">
+<div class="tab-pane fade show active" id="nav-charts" role="tabpanel"
+aria-labelledby="nav-charts-tab">
+<div class="row">
+<div class="col-lg-12">
+<form id="bookingForm">
 
-                                                        <optgroup label="Americas" style="color: rgb(0, 0, 0);">
-                                                            <option value="US">U.S.A./Mexico/Brazil</option>
-                                                            <option value="CA">Canada</option>
-                                                            <option value="GU">Guam</option>
-                                                        </optgroup>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width:39px;">City</td>
-                                                <td>
-                                                    <input type="text" name="from_city" style="width: 150px"
-                                                        placeholder="Name of City" id="dep_city">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width:37px;"> To </td>
-                                                <td>
-                                                    <select style="width:150px;" id="arrv_area">
-                                                        <optgroup label="Philippines">
-                                                            <option value="PH_CM">Philippines</option>
-                                                        </optgroup>
-                                                        <optgroup label="East Asia">
-                                                            <option value="KR_CM">East Asia</option>
-                                                            <option value="JPN_CM">Japan</option>
-                                                        </optgroup>
-                                                        <optgroup label="Europe">
-                                                            <option value="GB_CM">United Kingdom</option>
-                                                            <option value="IE_CM">Ireland</option>
-                                                            <option value="FR_CM">France</option>
-                                                            <option value="DE_CM">Germany</option>
-                                                            <option value="FI_CM">Finland</option>
-                                                            <option value="NL_CM">Netherlands/Scandinavia/Baltic
-                                                                States/Iceland</option>
-                                                            <option value="BE_CM">Belgium/Luxembourg</option>
-                                                            <option value="ES_CM">Spain/Portugal</option>
-                                                            <option value="IT_CM">Italy</option>
-                                                            <option value="AE_CM">Midivive East/Africa</option>
-                                                            <option value="AT_CM">Austria/Central Europe/Eastern Europe
-                                                            </option>
-                                                            <option value="CH_CM">Switzerland</option>
-                                                            <option value="RU_CM">Russia</option>
-                                                        </optgroup>
-                                                        <optgroup label="Americas">
-                                                            <option value="US_CM">U.S.A./Mexico/Brazil</option>
-                                                            <option value="CA_CM">Canada</option>
-                                                            <option value="GU_CM">Guam</option>
-                                                        </optgroup>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width:39px;">
-                                                    City
-                                                </td>
-                                                <td>
+   <div class="form-group row">
+   <label for="chonum" class="col-sm-1 col-form-label">Chosen flight number:</label>
+   <div class="col-sm-4">
+<input type="text" name="chonum"  class="form-control" id = "chonum" placeholder="DLS_U234"></input>
+   </div>
+   </div>
+   <div class="form-group row">
+  <label for="trv" class="col-sm-1 col-form-label">Travel Class</label>
+ <div class="col-sm-4">
+<select name="CFF_1"  style="width:150px;" id="trv_class">
+<option value="Economy">Economy</option>
+<option value="Business">Business</option>
+<option value="First">First</option>
+</select>
+</div>
+   </div>
+<div>
+<p style="word-spacing:25px;">
+<label for="NB_Adiv">Adults </label>
+<select name="NB_Adiv" id="numAd">
+<option class="" value="0">0</option>
+<option class="" value="1">1</option>
+<option class="" value="2">2</option>
+<option class="" value="3">3</option>
+<option class="" value="4">4</option>
+<option class="" value="5">5</option>
+<option class="" value="6">6</option>
+<option class="" value="7">7</option>
+<option class="" value="8">8</option>
+<option class="" value="9">9</option>
+</select>
 
-                                                    <input type="text" name="from_city" style="width: 150px"
-                                                        placeholder="Name of City" id="arv_city">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Departure Date
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="depart_date" id="depart_date"
-                                                        style="width: 150px;">
+<label for="NB_CHD">Children</label>
+<select name="NB_CHD" id="numChi">
+<option class="" value="0">0</option>
+<option class="" value="1">1</option>
+<option class="" value="2">2</option>
+<option class="" value="3">3</option>
+<option class="" value="4">4</option>
+<option class="" value="5">5</option>
+<option class="" value="6">6</option>
+<option class="" value="7">7</option>
+<option class="" value="8">8</option>
+<option class="" value="9">9</option>
+</select>
+<label for="NB_INF">Infants</label>
+<select name="NB_INF" id="numIn">
+<option class="" value="0">0</option>
+<option class="" value="1">1</option>
+<option class="" value="2">2</option>
+<option class="" value="3">3</option>
+<option class="" value="4">4</option>
+</select>
+</p>
+</div>
+<button  type="button"class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;" id = "addUserFlights">Confirm booking</button>
 
-                                                </td>
-                                            </tr>
+</form>
+<br>
+<div>
+<label>Available Flights:</label>
+<div>
+<table class="table table-striped table-hover cg" name="avail">
+<thead>
+<tr>
+<th>Date of Departure</th>
+<th>Time of Departure</th>
+<th>Aiport of Departure</th>
 
-                                            <tr>
-                                                <td>Departure Time</td>
-                                                <td><input type="time" name="depart_time" id="depart_time"
-                                                        style="width: 150px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Arrival Date
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="arrival_date" id="arrival_date"
-                                                        style="width: 150px;">
+<th>Flight number</th>
+<th>Date of Arrival</th>
+<th>Time of Arrival</th>
+<th>Aiport of Arrival</th>
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Arrival Time
-                                                </td>
-                                                <td>
-                                                    <input type="time" name="depart_time" id="arrival_time"
-                                                        style="width: 150px">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Travel Class</td>
-                                                <td>
-                                                    <select name="CFF_1" id="CFF" style="width:150px;" id="trv_class">
-                                                        <option value="1YE">Economy</option>
-                                                        <option value="1JE">Business</option>
-                                                        <option value="1UE">First</option>
-                                                </td>
-                                            </tr>
-                                            </select>
-                                        </table>
-                                        <p style="word-spacing:25px;">
-                                            <label for="NB_Adiv">Adults </label>
-                                            <select name="NB_Adiv" id="mdivNbAdiv">
-                                                <option class="" value="0">0</option>
-                                                <option class="" value="1">1</option>
-                                                <option class="" value="2">2</option>
-                                                <option class="" value="3">3</option>
-                                                <option class="" value="4">4</option>
-                                                <option class="" value="5">5</option>
-                                                <option class="" value="6">6</option>
-                                                <option class="" value="7">7</option>
-                                                <option class="" value="8">8</option>
-                                                <option class="" value="9">9</option>
-                                            </select>
+</tr>
+</thead>
 
-                                            <label for="NB_CHD">Children</label>
-                                            <select name="NB_CHD" id="mdivNbChd">
-                                                <option class="" value="0">0</option>
-                                                <option class="" value="1">1</option>
-                                                <option class="" value="2">2</option>
-                                                <option class="" value="3">3</option>
-                                                <option class="" value="4">4</option>
-                                                <option class="" value="5">5</option>
-                                                <option class="" value="6">6</option>
-                                                <option class="" value="7">7</option>
-                                                <option class="" value="8">8</option>
-                                                <option class="" value="9">9</option>
-                                            </select>
-                                            <label for="NB_INF">Infants</label>
-                                            <select name="NB_INF" id="mdivNcIdiv">
-                                                <option class="" value="0">0</option>
-                                                <option class="" value="1">1</option>
-                                                <option class="" value="2">2</option>
-                                                <option class="" value="3">3</option>
-                                                <option class="" value="4">4</option>
-                                            </select>
-                                        </p>
+<tbody id="datatable_client">
+{{#each flights}}
+<tr>
+<td>{{this.deptdate}}</td>
+<td>{{this.depttime}}</td>
+<td>{{this.deptarea}}</td>
 
-                                        <input type="submit" value="BOOK" class="btn mb-2 mr-2 rockwell"
-                                            style="color: white;background-color: #b9b9b9; border-radius: 8px;" id = "addUserFlights">
-
-                                    </form>
-                                    <label>Available Flights:</label>
-                                    <div>
-                                        <table class="table table-striped table-hover cg" name="avail">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date of Departure</th>
-                                                    <th>Time of Departure</th>
-                                                    <th>Aiport of Departure</th>
-
-                                                    <th>Flight number</th>
-                                                    <th>Date of Arrival</th>
-                                                    <th>Time of Arrival</th>
-                                                    <th>Aiport of Arrival</th>
-
-                                                </tr>
-                                            </thead>
-
-                                            <tbody id="datatable_client">
-                                                <tr>
-                                                    <td>March 2, 2019</td>
-                                                    <td>11:00 AM</td>
-                                                    <td>Ninony Aquino International Airport</td>
-
-                                                    <th>TIO_1258</th>
-                                                    <th>March 2,2020</th>
-                                                    <th>1:00PM</th>
-                                                    <th>Hongkong International Airport</th>
-
-                                                </tr>
-
-                                                <tr>
-
-                                                    <td>March 3, 2019</td>
-                                                    <td>12:00 AM</td>
-                                                    <td>Ninony Aquino International Airport</td>
-
-                                                    <th>TIO_2684</th>
-                                                    <th>March 2,2020</th>
-                                                    <th>12:00PM</th>
-                                                    <th>United States of America International Airport</th>
-
-                                                </tr>
-
-                                                <tr>
-                                                    <td>March 3, 2019</td>
-                                                    <td>11:00 AM</td>
-                                                    <td>Ninony Aquino International Airport</td>
-
-                                                    <th>TIO_5498</th>
-                                                    <th>March 2,2020</th>
-                                                    <th>4:00PM</th>
-                                                    <th>Singapore Airport</th>
-
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<th>{{this.flightnum}}</th>
+<th>{{this.arrivdate}}</th>
+<th>{{this.arrivtime}}</th>
+<th>{{this.arrivport}}</th>
+{{/each}}
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>

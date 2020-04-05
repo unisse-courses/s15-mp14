@@ -5,11 +5,12 @@ const handlebars = require('handlebars');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 9090;
+const port = 3000;
 
 const flightsModel = require('./models/flights');
 const planeModel = require('./models/airplanes');
 const userModel = require('./models/users');
+const bookingModel = require('./models/bookings');
 
 app.engine( 'hbs', exphbs({
     extname: 'hbs', // configures the extension name to be .hbs instead of .handlebars
@@ -46,14 +47,22 @@ app.get('/admin-table', function(req, res) {
 });
 
 app.get('/client-home',function(req,res){
-  res.render('client-home',{
-
+  flightsModel.find({}).sort({flightnum : 1}).populate('airport').exec(function(err, result){
+    var flightObjects =[];
+    result.forEach(function(doc){
+      flightObjects.push(doc.toObject());
+    });
+    res.render('client-home', {flights: flightObjects});
   });
-  
 })
 
 app.get('/client-table', function(req, res){
-  res.render('client-table',{
+  bookingModel.find({}).sort({flightnum : 1}).populate('flight').exec(function(err, result){
+    var bookingObject =[];
+    result.forEach(function(doc){
+      bookingObject.push(doc.toObject());
+    });
+    res.render('client-table', {bookings: bookingObject});
   });
 })
 
@@ -208,12 +217,6 @@ app.post('/deleteAll',function(req,res){
   })
 });
 
-app.get('/client-home',function(req,res){
-  res.render('client-home',{
-
-  });
-  
-})
 app.post('/searchUser',function(req,res){
   var pattern =  req.body.username;
   userModel.find({username: {$regex: pattern}}, function(err,user){
@@ -222,19 +225,32 @@ app.post('/searchUser',function(req,res){
 })
 app.post('/addUserFlights', function(req, res){
 
-  var newUserFlight = {
-    deparea: req.body.deparea1,
-    depcity: req.body.depcity,
-    arvarea1: req.body.arvarea1,
-    arvcity: req.body.arvcity,
-    depart_date: req.body.depart_date,
-    arrival_date: req.body.arrival_date,
-    trv_class: req.body.trv_class,
-    num_adt_tkcs: req.body.num_adt_tkcs,
-    num_chd_tkcs: req.body.num_chd_tkcs,
-    num_inf_tkcs: req.body.num_inf_tkcs, 
-  }
-})
+  flightsModel.findOne({"flightnum":req.body.flightnum}, function(err, flights){
+    if(err) throw err;  
+    console.log(flights)
+    const flighta = flights._id;
+    var newFlight = new bookingModel({
+      flight: flighta,
+      fclass: req.body.fclass,
+      adult: req.body.adults,
+      child: req.body.child,
+      infant: req.body.infa
+    });
+    newFlight.save(function(err,booking){
+      var result;
+      if(err){  
+        console.log(err.message);
+        result = {success: false, message:"Flight was not created"}
+        res.send(result)
+      }
+      else{
+        console.log(booking);
+        result={success:true, message:"Flight Created!"}
+      res.send(result);
+    }
+  });
+});
+  });
 
 
 

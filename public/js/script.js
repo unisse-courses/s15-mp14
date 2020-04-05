@@ -1,5 +1,78 @@
-$(document).ready(function(){
 
+$(document).ready(function(){
+    $('#login-form').on('click','#login-btn',function(){
+         var username = $('#username').val();
+        var password = $('#password').val();
+    
+    
+    $.post('searchUser', {username:username},function(data,status){
+        console.log(data);
+        var name = data[0].username;
+        var pass = data[0].password;
+        console.log(name);
+        console.log(pass);
+        var prov = data[0].prov;
+        if (username == name && password == pass && prov == true) {
+            localStorage.setItem("login", 1);
+            checkIfLoggedIn();
+        }
+        else if (username == name && password == pass && prov == false) {
+            localStorage.setItem("login", 1);
+            checkIfuserLoggedIn();
+        }
+        else {
+            $('#login-error').show();
+            $('#username').val("");
+            $('#password').val("");
+        }
+    });
+    });
+    
+    $('#show-password-btn').on('click', function() {
+        $(this).find('i').toggleClass('fa fa-eye').toggleClass('fa fa-eye-slash');
+        if($('#password').attr('type') == 'text'){
+            $('#password').attr('type', 'password');
+        }else{
+            $('#password').attr('type', 'text');
+        }
+    });
+    
+    //event handler for logout button
+    $('#logout-btn').click(function() {
+        //if clicked, then clear the login flag from localStorage with the key "login"
+        localStorage.removeItem("login");
+        //after clearing the "login" key, run the login check
+        //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
+        checkIfLoggedIn();
+        checkIfuserLoggedIn();
+    });
+    
+    function checkIfLoggedIn() {
+        var loginStatus = localStorage.getItem('login');
+        if (loginStatus == 1) {
+            if (!window.location.href.includes("/admin-home" )|| !window.location.href.includes("/admin-table") ||!window.location.href.includes("/EditFlights") || !window.location.href.includes("/CreateFlights" )) {
+                window.location.href = "/admin-home";
+            }
+    
+        } else {
+            if (window.location.href.includes("/") )
+                window.location.href = "/";
+            }
+        }
+    function checkIfuserLoggedIn() {
+        var loginStatus = localStorage.getItem('login');
+        if (loginStatus == 1) {
+            if (!window.location.href.includes("/client-home")) {
+                window.location.href = "/client-home";
+            }
+    
+        } else {
+            if (!window.location.href.includes("/")) {
+                window.location.href = "/";
+            }
+        }
+    }
+    
     function addUserFlightData(data, userFlightList){
         var tablerow = document.createElement('tr');
         var depdata = document.createElement('td');
@@ -36,61 +109,40 @@ $(document).ready(function(){
         tablerow.append(num_chd_data);
         tablerow.append(num_inf_data);
 
-        userFlightList.append(tablerow);
+        uerFlightList.append(tablerow);
     }
 
-    $('#addUserFlights').click(function(){
+    $('#bookingForm').on('click','#addUserFlights',function(){
         //If available in database then add 
-        var depArea = document.getElementById("deparea1");
-        var arvArea = document.getElementById('arrv_area');
-        var trv_Class = document.getElementById('trv_class');
-        var adt_tkcs = document.getElementById('mdivNbAdiv');
-        var chd_tkcs = document.getElementById('mdivNbnChd');
-        var inf_tkcs = document.getElementById('mdivNcIdiv');
+ 
 
-        var deparea1 = depArea.options[depArea.selectedIndex].text;
-        var deptime  = document.getElementById("depart_time").value;
-        var depcity = document.getElementById("dep_city").text;
-        var arvarea1 = arvArea.options[arvArea.selectedUIndex].text;
-        var arvtime = document.getElementById('arrival_time').value;        
-        var arvcity = document.getElementById("arv_city").text;
-        var depart_date = document.getElementById("depart_date").text;
-        var arrival_date = document.getElementById("arrival_date").text
-        var trv_class = trv_Class.options[trv_Class.selectedIndex].text;
-        var num_adt_tkcs = adt_tkcs.options[adt_tkcs.selectedIndex].text;
-        var num_chd_tkcs = chd_tkcs.options[chd_tkcs.selectedIndex].text;
-        var num_inf_tkcs = inf_tkcs.optioin[inf_tkcs.selectedIndex].text;
-    
+        var flightnum = $('#chonum').val();
+        var fclass = $("#trv_class option:selected").val();
+        var adults = $("#numAd option:selected").val();
+        var child = $("#numChi option:selected").val();
+        
+        var infa = $('#numIn').find(":selected").val();
 
         var newUserFlight = {
-            deparea: deparea1,
-            deptime: deptime,
-            depcity: depcity,
-            arvarea1: arvarea1,
-            arvtime: arvtime,
-            arvcity: arvcity,
-            depart_date: depart_date,
-            arrival_date: arrival_date,
-            trv_class: trv_class,
-            num_adt_tkcs: num_adt_tkcs,
-            num_chd_tkcs: num_chd_tkcs,
-            num_inf_tkcs: num_inf_tkcs, 
+            flightnum: flightnum,
+            fclass: fclass,
+            adults: adults,
+            child: child,
+            infa: infa
         }
+            console.log(newUserFlight);
+            $.post('addUserFlights', newUserFlight, function(data, status){
+                console.log(data);
 
-        $.post('addUserFlight', newUserFlight, function(data, status){
-            console.log(data);
-
-            var tablediv = $('#flightList');
-            addUserFlightData(data, tablediv);
-        })
+            })
     });
 
-        $.get('getFlights', function(data, status){
-            console.log(data);
+        // $.get('getFlights', function(data, status){
+        //     console.log(data);
 
-            var tablediv = $('£flightList');
-            data.forEach((item, i) =>{
-                addUserFlightData(item, tablediv);
-            });   
-        })
+        //     var tablediv = $('£flightList');
+        //     data.forEach((item, i) =>{
+        //         addUserFlightData(item, tablediv);
+        //     });   
+        // })
 });
