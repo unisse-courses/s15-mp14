@@ -253,7 +253,7 @@ $.post('addFlight', newFlight, function(data,status){
     
      
 
-    $('flightList').DataTable();
+    $('#flight-table').DataTable();
     $('#burger-sales-by-specie-table').DataTable();
 
     $('#clear-button').click(function() {
