@@ -122,10 +122,12 @@ app.post('/addUser', function (req, res){
     lname :req.body.lname,
     addr: req.body.addr,
     emadd: req.body.emadd,
+    username: req.body.username,
     password: req.body.password,
     gender: req.body.gender,
     birthday : req.body.birthday,
-    count : req.body.count
+    count : req.body.count,
+    prov: req.body.provider
 });
 
 user.save(function(err, user){
@@ -212,7 +214,12 @@ app.get('/client-home',function(req,res){
   });
   
 })
-
+app.post('/searchUser',function(req,res){
+  var pattern =  req.body.username;
+  userModel.find({username: {$regex: pattern}}, function(err,user){
+    res.send(user);
+  })
+})
 app.post('/addUserFlights', function(req, res){
 
   var newUserFlight = {

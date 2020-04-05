@@ -145,13 +145,7 @@ $(document).ready(function() {
     }
 
 
-//event handler for logout button
-// $('#logout-btn').click(function() {
-//     //if clicked, then clear the login flag from localStorage with the key "login"
-//     localStorage.removeItem("login");
-//     //after clearing the "login" key, run the login check
-//     //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
-//     checkIfLoggedIn();
+$('#flightList').DataTable();
 
 $('#regForm').on('click','#addUser',function(){
     var name = $('#regname').val();
@@ -159,8 +153,10 @@ $('#regForm').on('click','#addUser',function(){
     var last = $('#reglast').val();
     var address = $('#regad').val();
     var email = $('#regEmail').val();
+    var username = $('#reguser').val();
     var pass = $('#regpass').val();
     var sex = $("input[name='sex']:checked").val();
+    var prov = $("input[name='choice']:checked").val();
     var bday = $('#regbday').val();
     var country = $("#regcount").val();
 console.log(sex);
@@ -170,10 +166,12 @@ console.log(sex);
         lname : last,
         addr: address,
         emadd: email,
+        username:username,
         password: pass,
         gender: sex,
         birthday : bday,
-        count : country
+        count : country,
+        provider: prov
     };
     $.post('addUser',newUser,function(data, status){
         if(data.success)
@@ -254,7 +252,7 @@ $.post('addFlight', newFlight, function(data,status){
     
      
 
-    $('flightList').DataTable();
+    $('#flight-table').DataTable();
     $('#burger-sales-by-specie-table').DataTable();
 
     $('#clear-button').click(function() {

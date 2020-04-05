@@ -15,9 +15,11 @@ const UserSchema = new mongoose.Schema({
         addr: { type : String, required : true} ,
         emadd:{ type: String, required : true} ,
         password: { type : String, required : true} ,
+        username: { type : String, required : true} ,
         gender: { type : String, required : true} ,
         birthday :{ type : String, required : true} ,
-        count : { type : String, required : true} 
+        count : { type : String, required : true} ,
+        prov: { type : Boolean, required:true}
 });
 
 
