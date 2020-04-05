@@ -1,0 +1,43 @@
+    <div class="container">
+        <div class="card mx-auto border-purple " style="max-width: 35rem; margin-top: 100px;">
+            <!-- <div class="card-header text-white bg-purple">Login <span class="fa fa-user"></span></div> -->
+            <div class="card-body cg" style="background: #87cefa;">
+                <div style="margin: auto; text-align: center; position: relative; top: -80px; margin-bottom: -60px;">
+                    <img id="login-icon" src="img/line-plane-shipping-icon-on-white-background-vector-17697427.jpg" class="rounded-circle img-thumbnail" style="max-width: 10rem;">
+                </div>
+                <h5 class="card-title">Please enter your credentials</h5>
+                <div id="login-error" class="alert alert-danger hide" role="alert">
+                    Incorrect login credentials.
+                </div>
+                <form id="login-form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <span class="fa fa-user-circle"></span>
+                            </span>
+                        </div>
+                        <input type="text" id="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <span class="fa fa-lock"></span>
+                            </span>
+                        </div>
+                        <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" data-toggle="password">
+                        <div class="input-group-append">
+                            <span id="show-password-btn" class="input-group-text">
+                                <i class="fa fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <input id="login-btn" type="button" class="btnSubmit" value="Login" /><br>
+                        <button type = "button" class = "btn btn-link">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="/path/to/bootstrap-show-password.js"></script>

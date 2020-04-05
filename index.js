@@ -19,17 +19,17 @@ app.engine( 'hbs', exphbs({
 
   app.set('view engine', 'hbs');
 
-  app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(express.static('public'));
 
-// app.get('/', function(req, res) {
-//     // The render function takes the template filename (no extension - that's what the config is for!)
-//     // and an object for what's needed in that template
-//     res.render('flights', {
-//     })
-// });
+app.get('/', function(req, res) {
+     // The render function takes the template filename (no extension - that's what the config is for!)
+     // and an object for what's needed in that template
+     res.render('login', {
+     })
+});
 app.get('/admin-home', function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -51,6 +51,13 @@ app.get('/admin-table', function(req, res) {
   })
 });
 
+app.get('/client-home',function(req,res){
+  res.render('client-home',{
+
+  });
+  
+})
+
 app.get('/CreateFlights',function(req,res){
 // code to getting data from db here
   res.render('flights', {
@@ -67,6 +74,23 @@ app.post('/addFlight', (req,res) => {
     arrivtime: req.body.artime
   
 });
+
+app.post('/addUserFlights', function(req, res){
+
+  var newUserFlight = {
+    deparea: req.body.deparea1,
+    depcity: req.body.depcity,
+    arvarea1: req.body.arvarea1,
+    arvcity: req.body.arvcity,
+    depart_date: req.body.depart_date,
+    arrival_date: req.body.arrival_date,
+    trv_class: req.body.trv_class,
+    num_adt_tkcs: req.body.num_adt_tkcs,
+    num_chd_tkcs: req.body.num_chd_tkcs,
+    num_inf_tkcs: req.body.num_inf_tkcs, 
+  }
+})
+
 flight.save(function(err, flight){
   var result;
   if(err){  
