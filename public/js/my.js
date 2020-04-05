@@ -145,6 +145,8 @@ $(document).ready(function() {
     }
 
 
+$('#flightList').DataTable();
+
 $('#regForm').on('click','#addUser',function(){
     var name = $('#regname').val();
     var initials = $('#regmid').val();
@@ -182,6 +184,7 @@ console.log(sex);
         }
     });
 });
+
 
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
