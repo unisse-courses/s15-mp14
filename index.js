@@ -7,11 +7,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-const flightsModel = require('./models/flights');
-const planeModel = require('./models/airplanes');
-const userModel = require('./models/users');
-const bookingModel = require('./models/bookings');
-
 app.engine( 'hbs', exphbs({
     extname: 'hbs', // configures the extension name to be .hbs instead of .handlebars
     defaultView: 'main', // this is the default value but you may change it to whatever you'd like

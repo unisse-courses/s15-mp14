@@ -20,3 +20,4 @@ router.get('/admin-table', flightsController.flightList);
 
 router.get('/EditFlights', flightsController.editForm);
 
+module.exports = router;

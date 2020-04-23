@@ -1,5 +1,5 @@
 const flightModel = require('../models/flights');
-
+const planeModel = require('../models/airplanes');
 exports.getFlight = function(req,res){
     flightModel.findAll(function(result){
         res.send(result);
@@ -7,6 +7,9 @@ exports.getFlight = function(req,res){
 };
 
 exports.createFlight = function(req,res){
+    planeModel.findNUpdate(req.body.port,function(result){
+        const planeid = result._id;
+
     var deptdate= req.body.ddate,
     depttime= req.body.dtime,
     deptarea= req.body.deptairport,
@@ -16,9 +19,10 @@ exports.createFlight = function(req,res){
     arrivport= req.body.aport,
     flightnum=req.body.flight
 
-    flightModel.create(deptdate,depttime,deptarea,desti,arrivdate,arrivtime,arrivport,flightnum,function(result){
+    flightModel.create(planeid,deptdate,depttime,deptarea,desti,arrivdate,arrivtime,arrivport,flightnum,function(result){
         res.send(result);
     })
+});
 }
 
 exports.updateFlight = function(req,res){

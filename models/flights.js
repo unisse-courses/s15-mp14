@@ -1,15 +1,4 @@
-const mongoose = require('mongoose');
-
-const databaseURL = 'mongodb://localhost:27017/flightsdb';
-
-
-const options = { useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false };
-
-
-mongoose.connect(databaseURL, options)
-
+const mongoose = require('./connection');
 const FlightSchema = new mongoose.Schema({
  deptdate: {type:Date, default: Date.now },
  depttime: { type : String, required : true} ,
@@ -24,7 +13,7 @@ airplane: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 const flightsModel = mongoose.model('flight', FlightSchema);
 
-exports.create = function (ddate,dtime,deptairport,destination,adate,artime,aport,flight, next){
+exports.create = function (planeid,ddate,dtime,deptairport,destination,adate,artime,aport,flight, next){
 
  var flight = new flightsModel ({
           deptdate: ddate,
@@ -43,9 +32,9 @@ flight.save(function(err,result){
 });
 };
 
-exports.findAll = function(fnum, next){
-    var pattern = "^" + fnum;
-    flightsModel.find({flightnum: {$regex: pattern}}, function(err, result){
+exports.find = function(fnum, next){
+    var pattern =  fnum;
+    flightsModel.find({"flightnum": pattern}, function(err, result){
         if(err) throw err;
         next(result);
     })

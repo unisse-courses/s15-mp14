@@ -1,14 +1,4 @@
-const mongoose = require('mongoose');
-
-const databaseURL = 'mongodb://localhost:27017/flightsdb';
-
-
-const options = { useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false };
-
-
-mongoose.connect(databaseURL, options)
+const mongoose = require('./connection');
 
 const BookingSchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
@@ -18,4 +8,29 @@ const BookingSchema = new mongoose.Schema({
     child: {type: Number, required:true},
     infant: {type: Number, required:true}
 });
-module.exports = mongoose.model('bookings', BookingSchema);
+const bookingModel = mongoose.model('bookings', BookingSchema);
+
+exports.create = function(flighta,fclass,adult,child,infant,next){
+    var booking = new bookingModel({ 
+        flight : flighta,
+    fclass : fclass,
+    adult : adult,
+    child : child,
+    infant : infant
+});
+    booking.save(function(err,result){
+        if(err) throw err
+        next(result);
+    })
+}
+
+exports.findAll = function(accnum, next){
+    bookingModel.find({user: accnum}).sort({flightnum:1}),populate('flight').exec(function(err, result){
+        if (err) throw err;
+        var bookingObjects = [];
+        result.forEach(function(doc){
+            bookingObjects.push(doc.toObject());
+        });
+        next(bookingObjects);
+    })
+}
