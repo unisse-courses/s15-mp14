@@ -3,6 +3,8 @@ $(document).ready(function(){
     $('#login-form').on('click','#login-btn',function(){
          var username = $('#username').val();
         var password = $('#password').val();
+
+        localStorage.setItem('username', username);
     
     
     $.post('searchUser', {username:username},function(data,status){
@@ -41,12 +43,27 @@ $(document).ready(function(){
     $('#logout-btn').click(function() {
         //if clicked, then clear the login flag from localStorage with the key "login"
         localStorage.removeItem("login");
+        localStorage.removeIteme("username");
         //after clearing the "login" key, run the login check
         //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
         checkIfLoggedIn();
         checkIfuserLoggedIn();
     });
-    
+
+    //making it obvious
+    //To check this shit 
+    $(function(){
+        var current = window.location.href;
+        $('a span').each(function(){
+            if(this.href === path){
+                $(this).addClass('active');
+            }
+        })
+    })
+    //end for marrking lang to
+
+
+
     function checkIfLoggedIn() {
         var loginStatus = localStorage.getItem('login');
         if (loginStatus == 1) {
@@ -124,6 +141,7 @@ $(document).ready(function(){
         var infa = $('#numIn').find(":selected").val();
 
         var newUserFlight = {
+            username: localStorage.getItem('username'),
             flightnum: flightnum,
             fclass: fclass,
             adults: adults,

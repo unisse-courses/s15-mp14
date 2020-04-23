@@ -11,8 +11,9 @@ const options = { useNewUrlParser: true,
 mongoose.connect(databaseURL, options)
 
 const BookingSchema = new mongoose.Schema({
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     flight: {type: mongoose.Schema.Types.ObjectId, ref: 'flight'},
-    fclass: {type: String, required: true},
+    fclass: {type: String, enum:['Economy', 'Business', ' First'], required: true},
     adult: {type: Number, required:true},
     child: {type: Number, required:true},
     infant: {type: Number, required:true}

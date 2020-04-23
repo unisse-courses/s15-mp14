@@ -147,6 +147,9 @@ $(document).ready(function() {
 
 $('#flightList').DataTable();
 
+$('#credepttime').timepicker();
+$('#crearrtime').timepicker();
+
 $('#regForm').on('click','#addUser',function(){
     var name = $('#regname').val();
     var initials = $('#regmid').val();

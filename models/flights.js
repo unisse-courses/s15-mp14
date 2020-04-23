@@ -11,16 +11,86 @@ const options = { useNewUrlParser: true,
 mongoose.connect(databaseURL, options)
 
 const FlightSchema = new mongoose.Schema({
- deptdate: {type:String, default: Date.now },
+ deptdate: {type:Date, default: Date.now },
  depttime: { type : String, required : true} ,
  deptarea: { type : String, required : true} ,
- desti: {type:String, required:true },
- arrivdate: { type : String ,default: Date.now} ,
+ arrivdate: { type : Date ,default: Date.now} ,
 arrivtime: { type : String, required : true},
 arrivport: {type:String, required:true},
 flightnum: {type:String, required:true},
-airport: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
+airplane: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 });
 
-module.exports = mongoose.model('flight', FlightSchema);
+const flightsModel = mongoose.model('flight', FlightSchema);
+
+exports.create = function (ddate,dtime,deptairport,destination,adate,artime,aport,flight, next){
+
+ var flight = new flightsModel ({
+          deptdate: ddate,
+          depttime: dtime,
+          deptarea: deptairport,
+          desti: destination,
+          arrivdate: adate,
+          arrivtime: artime,
+          arrivport: aport,
+          flightnum:flight,
+          airplane: planeid
+});
+flight.save(function(err,result){
+    if(err) throw err 
+    next(result);
+});
+};
+
+exports.findAll = function(fnum, next){
+    var pattern = "^" + fnum;
+    flightsModel.find({flightnum: {$regex: pattern}}, function(err, result){
+        if(err) throw err;
+        next(result);
+    })
+}
+exports.findtable = function(next){
+    flightsModel.find({}).sort({flightnum:1}).populate('airplane').exec(function(err,result){
+        var flightObjects = [];
+        result.forEach(function(doc){
+            flightObjects.push(doc.toObject());
+        });
+        next(flightObjects);
+    })
+}
+exports.update = function(fnum,ddate,dtime,darea,adate,atime,aport,next){
+    var filter =  {flightnum: fnum};
+    var update = {
+        $set : {
+            deptdate: ddate,
+            depttime: dtime,
+            deptarea: darea,
+            arrivdate: adate,
+            arrivtime: atime,
+            arrivport: aport
+          }
+    };
+    flightsModel.updateOne(filter,update,function(err,result){
+        if(err) throw err;
+        next(result);
+    })
+}
+
+exports.delete = function(fnum, next){
+    filter = {flightnum: fnum};
+    flightsModel.deleteOne(filter,function(err,result){
+        if(err) throw err;
+    
+        next(result);
+    
+      })
+}
+
+exports.deleteAll = function(next){
+    flightsModel.deleteMany(({}), function(err,result){
+        if (err) throw err;
+
+        next(result);
+    })
+}
