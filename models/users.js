@@ -1,4 +1,5 @@
 const mongoose = require('./connection');
+
 const UserSchema = new mongoose.Schema({
         name :{ type : String, required : true} ,
         initial: { type : String, required : true} ,
@@ -29,7 +30,7 @@ exports.create = function(name, initial,lname,addr,emadd,username,password,gende
         count : count,
         prov: provider
     });
-    user.save(function(err, result){
+    userModel.save(function(err, result){
        if (err) throw err;
        next(result);
       });

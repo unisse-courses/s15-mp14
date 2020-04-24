@@ -18,7 +18,7 @@ exports.create = function(flighta,fclass,adult,child,infant,next){
     child : child,
     infant : infant
 });
-    booking.save(function(err,result){
+    bookingModel.save(function(err,result){
         if(err) throw err
         next(result);
     })

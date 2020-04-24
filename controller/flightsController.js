@@ -61,7 +61,7 @@ exports.AddForm = function(req,res){
 }
 
 exports.Home= function(req,res){
-    res.rendeer('admin-home');
+    res.render('admin-home');
 }
 exports.editForm = function(req,res){
     res.render('editflights');

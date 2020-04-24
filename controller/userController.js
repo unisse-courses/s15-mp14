@@ -87,22 +87,22 @@ exports.createUser = function(req,res){
 
 
     
-    exports.loginUser = (req, res) => {
-        // 1. Validate request
+    // exports.loginUser = (req, res) => {
+    //     // 1. Validate request
       
-        // 2. If VALID, find if email exists in users
-        //      EXISTING USER (match retrieved)
-        //        a. Check if password matches hashed password in database
-        //        b. If MATCH, save info to session and redirect to home
-        //        c. If NOT equal, redirect to login page with error
-        //      UNREGISTERED USER (no results retrieved)
-        //        a. Redirect to login page with error message
+    //     // 2. If VALID, find if email exists in users
+    //     //      EXISTING USER (match retrieved)
+    //     //        a. Check if password matches hashed password in database
+    //     //        b. If MATCH, save info to session and redirect to home
+    //     //        c. If NOT equal, redirect to login page with error
+    //     //      UNREGISTERED USER (no results retrieved)
+    //     //        a. Redirect to login page with error message
       
-        // 3. If INVALID, redirect to login page with errors
-        res.redirect('/');
-      };
+    //     // 3. If INVALID, redirect to login page with errors
+    //     res.redirect('/');
+    //   };
       
-      exports.logoutUser = (req, res) => {
-        // Destroy the session and redirect to login page
-        res.redirect('/login');
-      };
+    //   exports.logoutUser = (req, res) => {
+    //     // Destroy the session and redirect to login page
+    //     res.redirect('/login');
+    //   };
