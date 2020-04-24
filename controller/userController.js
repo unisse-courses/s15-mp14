@@ -1,4 +1,6 @@
 const userModel = require('../models/users');
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
 
 exports.getUser = function(req,res){
     userModel.getOne(function(result){
@@ -37,8 +39,54 @@ exports.createUser = function(req,res){
   //        a. Redirect user to login page with error message.
 
   // 3. If INVALID, redirect to register page with errors
-  res.redirect('/login');
+  const errors = validationResult(req);
+
+  if (errors.isEmpty()) {
+    const { name, email, password } = req.body;
+  //Check user code
+    userModel.getOne({ email: email }, (err, result) => {
+      if (result) {
+        console.log(result);
+        // found a match, return to login with error
+        req.flash('error_msg', 'User already exists. Please login.');
+        res.redirect('/login');
+      } else {
+         //Hashing the password
+       const saltRounds = 10;
+
+       // Hash password
+       bcrypt.hash(password, saltRounds, (err, hashed) => {
+         const newUser = {
+           name,
+           email,
+           password: hashed
+         };
+ 
+         userModel.create(newUser, (err, user) => {
+           if (err) {
+             req.flash('error_msg', 'Could not create user. Please try again.');
+             res.redirect('/register');
+             // res.status(500).send({ message: "Could not create user"});
+           } else {
+             req.flash('success_msg', 'You are now registered! Login below.');
+             res.redirect('/login');
+           }
+         });
+       });
+       // end hash code
+      }
+       //end check user code
+    });
+  } else {
+    const messages = errors.array().map((item) => item.msg);
+  
+    req.flash('error_msg', messages.join(' '));
+    res.redirect('/register');
+  }
     }
+
+
+    
     exports.loginUser = (req, res) => {
         // 1. Validate request
       

@@ -3,6 +3,9 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const handlebars = require('handlebars');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 const port = 3000;
