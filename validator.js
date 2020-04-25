@@ -30,6 +30,13 @@ body('regbday').not().isEmpty().withMessage("Birth Date is required."),
     })
 ];
 
-module.exports = { registerValidation };
+const loginValidation = [
+//username should not b empty
+body('username').not().isEmpty().withMessage("Incorrect Credentials please try again"),
+//Password must not be empty
+body('password').not().isEmpty().withMessage("Incorrect Credentials please try again").isLength({min: 6 }).withMessage("Incorrect Credentials please try again")
+]
+
+module.exports = { registerValidation , loginValidation};
 
 //add lahat ng nasa form dito.

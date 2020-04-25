@@ -77,22 +77,59 @@ exports.getUser = function(req,res){
 
 
     
-    // exports.loginUser = (req, res) => {
-    //     // 1. Validate request
+    exports.loginUser = (req, res) => {
+      const errors = validationResult(req);
+
+      if (errors.isEmpty()) {
+        const { username, password } = req.body;
+  
+        userModel.getOne({ username: username }, (err, user) => {
+          if (err) {
+            // Database error occurred...
+            req.flash('error_msg', 'Something happened! Please try again.');
+            res.redirect('/login');
+          } else {
+            // Successful query
+            if (user) {
+              bcrypt.compare(password, user.password, (err, result) => {
+                // passwords match (result == true)
+                if (result) {
+                  // Update session object once matched!
+                  req.session.user = user._id;
+                  req.session.name = user.username;
+                  req.session.prov = user.prov;
+                  console.log(req.session);
+                  if(user.prov == true)
+                  res.redirect('/admin-table');
+                  else if(user.prov == false)
+                  res.redirect('/client-table');
+                } else {
+                  // passwords don't match
+                  req.flash('error_msg', 'Incorrect Credentials. Please try again.');
+                  res.redirect('/login');
+                }
+              });
+            } else {
+              // No user found
+              req.flash('error_msg', 'No such user. Please register first!');
+              res.redirect('/login');
+            }
+          }
+        });
+        res.redirect('/');
+      } else {
+        const messages = errors.array().map((item) => item.msg);
       
-    //     // 2. If VALID, find if email exists in users
-    //     //      EXISTING USER (match retrieved)
-    //     //        a. Check if password matches hashed password in database
-    //     //        b. If MATCH, save info to session and redirect to home
-    //     //        c. If NOT equal, redirect to login page with error
-    //     //      UNREGISTERED USER (no results retrieved)
-    //     //        a. Redirect to login page with error message
+        req.flash('error_msg', messages.join(' '));
+        res.redirect('/login');
+      }
+      };
       
-    //     // 3. If INVALID, redirect to login page with errors
-    //     res.redirect('/');
-    //   };
-      
-    //   exports.logoutUser = (req, res) => {
-    //     // Destroy the session and redirect to login page
-    //     res.redirect('/login');
-    //   };
+      exports.logoutUser = (req, res) => {
+        if (req.session) {
+          req.session.destroy(() => {
+            res.clearCookie('connect.sid');
+            res.redirect('/login');
+          });
+        }
+      };
