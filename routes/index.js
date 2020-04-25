@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { isPrivate } = require('../middlewares/checkSession');
 
-router.get('/', (req, res) => {
+router.get('/', isPrivate, (req, res) => {
   if(req.session.prov == true)
   res.render('admin-home' );
   else (req.session.prov == false)

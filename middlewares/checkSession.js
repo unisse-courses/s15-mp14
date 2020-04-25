@@ -17,4 +17,4 @@ exports.isPrivate = (req, res, next) => {
     } else {
       return next();
     }
-  }
+  } 

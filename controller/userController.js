@@ -116,7 +116,6 @@ exports.getUser = function(req,res){
             }
           }
         });
-        res.redirect('/');
       } else {
         const messages = errors.array().map((item) => item.msg);
       
