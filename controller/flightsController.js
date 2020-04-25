@@ -9,17 +9,15 @@ exports.getFlight = function(req,res){
 exports.createFlight = function(req,res){
     planeModel.findNUpdate(req.body.port,function(result){
         const planeid = result._id;
-
     var deptdate= req.body.ddate,
     depttime= req.body.dtime,
     deptarea= req.body.deptairport,
-    desti= req.body.destination,
     arrivdate= req.body.adate,
     arrivtime= req.body.artime,
     arrivport= req.body.aport,
     flightnum=req.body.flight
 
-    flightModel.create(planeid,deptdate,depttime,deptarea,desti,arrivdate,arrivtime,arrivport,flightnum,function(result){
+    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,flightnum,function(result){
         res.send(result);
     })
 });
@@ -53,6 +51,13 @@ exports.deleteAll = function(req,res){
 }
 exports.flightList = function(req,res){
     flightModel.findtable(function(result){
+        for(var i =0; i< result.length; i++)
+        {
+         var temp1 = new Date(result[i].deptdate);
+         var temp2 = new Date(result[i].arrivdate);
+        result[i].deptdate = temp1.toDateString();
+        result[i].arrivdate = temp2.toDateString();
+        }
         res.render('admin-table', {flights: result});
     })
 }

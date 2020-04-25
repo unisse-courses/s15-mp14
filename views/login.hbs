@@ -10,14 +10,13 @@
                 <form action="/login" method="POST">
                 <h5 class="card-title">Please enter your credentials</h5>
                 	{{> errorMessage}}
-                <form id="login-form">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <span class="fa fa-user-circle"></span>
                             </span>
                         </div>
-                        <input type="text" id="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="username" name = "username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -25,7 +24,7 @@
                                 <span class="fa fa-lock"></span>
                             </span>
                         </div>
-                        <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" data-toggle="password">
+                        <input type="password" id="password" name = "password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" data-toggle="password">
                         <div class="input-group-append">
                             <span id="show-password-btn" class="input-group-text">
                                 <i class="fa fa-eye"></i>
@@ -37,7 +36,6 @@
                         </form>
                         <button type = "button"  onclick="window.location.href ='/register';"class = "btn btn-link">Register</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>   

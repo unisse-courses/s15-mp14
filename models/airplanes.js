@@ -19,8 +19,8 @@ exports.create = function(company, planeNum, next){
 }
 
 exports.findNUpdate = function(planeObj, next){
-    planeModel.findOneAndUpdate(planeObj, {$set: 
-        {"Company":planeObj.comp,"PlaneNum":planeObj.flightnum}},{new:true, upsert:true, strict:false},function(err, plane){
-            next(plane);
+    planeModel.findOneAndUpdate(planeObj, {$set: planeObj},{new:true, upsert:true, strict:false},function(err, plane){    
+        next(plane);
+            
         })
 }

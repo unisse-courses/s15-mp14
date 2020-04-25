@@ -13,13 +13,12 @@ airplane: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 const flightsModel = mongoose.model('flight', FlightSchema);
 
-exports.create = function (planeid,ddate,dtime,deptairport,destination,adate,artime,aport,flight, next){
+exports.create = function (planeid,ddate,dtime,deptairport,adate,artime,aport,flight, next){
 
  var flight = new flightsModel ({
           deptdate: ddate,
           depttime: dtime,
           deptarea: deptairport,
-          desti: destination,
           arrivdate: adate,
           arrivtime: artime,
           arrivport: aport,
@@ -28,7 +27,7 @@ exports.create = function (planeid,ddate,dtime,deptairport,destination,adate,art
 });
 flight.save(function(err,result){
     if(err) throw err 
-    next(result);
+        next(result);
 });
 };
 

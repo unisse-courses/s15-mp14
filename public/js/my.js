@@ -157,7 +157,6 @@ $('#flightForm').on('click','#adddd',function(){
     var deptdate = $('#credeptdate').val();
     var depttime = $("#credepttime").val();
     var deptair = $('#credeptair').val();
-    var desti =$('#credest').val();
     var arrdate = $("#crearrdate").val();
     var arrtime = $("#crearrtime").val();
     var arrport = $("#crearrport").val();
@@ -170,14 +169,13 @@ $('#flightForm').on('click','#adddd',function(){
         ddate: deptdate,
         dtime :depttime,
         deptairport: deptair,
-        destination: desti,
         adate: arrdate,
         artime: arrtime,
         aport: arrport,
         flight: flight,
         port:  {
-            comp:comp,
-            flightnum: flightnum
+            Company:comp,
+            PlaeNum: flightnum
         }
     };
     console.log(newFlight);
@@ -185,6 +183,7 @@ $.post('addFlight', newFlight, function(data,status){
     if(data.success)
     {
     alert(data.message)
+    console.log(data);
     window.location.assign("/admin-table");
     }
     else{

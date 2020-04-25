@@ -10,7 +10,6 @@
     <thead>
         <tr>
             <th>Company</th>
-            <th>Destination</th>
             <th>Date of Departure</th>
             <th>Time of Departure</th>
             <th>Aiport of Departure</th>
@@ -24,13 +23,12 @@
  </thead>   
       {{#each flights}}
         <tr>
-            <td>{{this.airport.Company}}</td>
-            <td>{{this.desti}}</td>
+            <td>{{this.airplane.Company}}</td>
             <td>{{this.deptdate}}</td>
             <td>{{this.depttime}}</td>
             <td>{{this.deptarea}}</td>
             <td>{{this.flightnum}}</td>
-            <td>{{this.airport.Company}}</td>
+            <td>{{this.airplane.Company}}</td>
             <td>{{this.arrivdate}}</td>
             <td>{{this.arrivtime}}</td>
             <td>{{this.arrivport}}</td>
