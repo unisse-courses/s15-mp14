@@ -36,6 +36,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(express.static('public'));
+
 app.use(session({
   secret: 'somegibberishsecret',
   store: new MongoStore({ mongooseConnection: mongoose.connection }),

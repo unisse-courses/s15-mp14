@@ -2,7 +2,7 @@ const mongoose = require('./connection');
 
 const UserSchema = new mongoose.Schema({
         name :{ type : String, required : true} ,
-        initial: { type : String, required : true} ,
+        initial: { type : String} ,
         lname :{ type : String, required : true} ,
         addr: { type : String, required : true} ,
         emadd:{ type: String, required : true} ,
@@ -16,30 +16,16 @@ const UserSchema = new mongoose.Schema({
 
 const userModel = mongoose.model('user', UserSchema);
 
-exports.create = function(name, initial,lname,addr,emadd,username,password,gender,birthday,count,provider, next){
-    var user = new userModel({
-        name: name,
-        initial: initial,
-        lname :lname,
-        addr: addr,
-        emadd: emadd,
-        username: username,
-        password: password,
-        gender: gender,
-        birthday : birthday,
-        count : count,
-        prov: provider
-    });
-    userModel.save(function(err, result){
+exports.create = function(obj, next){
+    var user = new userModel(obj);
+    user.save(function(err, result){
        if (err) throw err;
-       next(result);
+       next(err,result);
       });
 };
 
-exports.getOne = function(username, next){
-    var pattern = username;
-    userModel.findOne({username:{$regex: pattern}}, function(err, user){
-       if(err) throw err;
-        next(user);
+exports.getOne = function(filter, next){
+    userModel.findOne(filter, function(err, user){
+        next(err,user);
     })
 }

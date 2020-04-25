@@ -8,24 +8,6 @@ exports.getUser = function(req,res){
     })
 }
 
-exports.createUser = function(req,res){
-    var name= req.body.name,
-    initial= req.body.initial,
-    lname =req.body.lname,
-    addr= req.body.addr,
-    emadd= req.body.emadd,
-    username= req.body.username,
-    password= req.body.password,
-    gender= req.body.gender,
-    birthday = req.body.birthday,
-    count = req.body.count,
-    provider= req.body.provider
-
-    userModel.create(name, initial,lname,addr,emadd,username,password,gender,birthday,count,provider, function(result){
-        res.send(result);
-    })
-
-    }
 
     exports.registerUser = (req, res) => {
         // 1. Validate request
@@ -40,11 +22,11 @@ exports.createUser = function(req,res){
 
   // 3. If INVALID, redirect to register page with errors
   const errors = validationResult(req);
-
+      console.log(req.body);
   if (errors.isEmpty()) {
-    const { name, email, password } = req.body;
+    const { regname, regmid,reglast,regad,regEmail,reguser, regpass,confirmPass,sex, regbday,country,choice  } = req.body;
   //Check user code
-    userModel.getOne({ email: email }, (err, result) => {
+    userModel.getOne({ username : reguser }, (err, result) => {
       if (result) {
         console.log(result);
         // found a match, return to login with error
@@ -55,13 +37,21 @@ exports.createUser = function(req,res){
        const saltRounds = 10;
 
        // Hash password
-       bcrypt.hash(password, saltRounds, (err, hashed) => {
+       bcrypt.hash(regpass, saltRounds, (err, hashed) => {
          const newUser = {
-           name,
-           email,
-           password: hashed
+           name : regname,
+           initial : regmid,
+           lname : reglast,
+           addr : regad,
+           emadd : regEmail,
+           password: (regpass , hashed),
+           username : reguser,
+           gender : sex,
+           birthday: regbday,
+           count : country,
+           prov : choice
          };
- 
+         console.log(newUser);
          userModel.create(newUser, (err, user) => {
            if (err) {
              req.flash('error_msg', 'Could not create user. Please try again.');
@@ -73,7 +63,7 @@ exports.createUser = function(req,res){
            }
          });
        });
-       // end hash code
+       // end hash code 
       }
        //end check user code
     });

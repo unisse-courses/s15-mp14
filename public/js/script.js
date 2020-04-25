@@ -52,15 +52,15 @@ $(document).ready(function(){
 
     //making it obvious
     //To check this shit 
-    $(function(){
-        var current = window.location.href;
-        $('a span').each(function(){
-            if(this.href === path){
-                $(this).addClass('active');
-            }
-        })
-    })
-    //end for marrking lang to
+    // $(function(){
+    //     var current = window.location.href;
+    //     $('a span').each(function(){
+    //         if(this.href === path){
+    //             $(this).addClass('active');
+    //         }
+    //     })
+    // })
+    // //end for marrking lang to
 
 
 

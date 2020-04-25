@@ -150,43 +150,7 @@ $('#flightList').DataTable();
 $('#credepttime').timepicker();
 $('#crearrtime').timepicker();
 
-$('#regForm').on('click','#addUser',function(){
-    var name = $('#regname').val();
-    var initials = $('#regmid').val();
-    var last = $('#reglast').val();
-    var address = $('#regad').val();
-    var email = $('#regEmail').val();
-    var username = $('#reguser').val();
-    var pass = $('#regpass').val();
-    var sex = $("input[name='sex']:checked").val();
-    var prov = $("input[name='choice']:checked").val();
-    var bday = $('#regbday').val();
-    var country = $("#regcount").val();
-console.log(sex);
-    var newUser = {
-        name: name,
-        initial: initials,
-        lname : last,
-        addr: address,
-        emadd: email,
-        username:username,
-        password: pass,
-        gender: sex,
-        birthday : bday,
-        count : country,
-        provider: prov
-    };
-    $.post('addUser',newUser,function(data, status){
-        if(data.success)
-        {
-        alert(data.message)
-        window.location.assign("/");
-        }
-        else{
-            alert(data.message);
-        }
-    });
-});
+
 
 $('#flightForm').on('click','#adddd',function(){
     console.log("Heelloo")
