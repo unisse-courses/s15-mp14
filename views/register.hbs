@@ -1,59 +1,56 @@
  {{> nav-main}}
-  <div class="mx-3">
+
+	    <div style="margin: auto; text-align: center; position: relative; top: 20px">
+	  <div class="container">
+	  <div class ="card">
+		  <h3 class="card-header">Register</h3>
  <div class="card-body cg" style="background: #87cefa;">
 	<form id= "regForm" "col s8 offset-s2 card" acion ="/register" method ="POST">
 	{{> errorMessage}}
 		<div class="form-group row">
-	  <label for="regname" class="col-sm-1 col-form-label">First Name: </label>
-	  <div class="col-sm-4">
+	  <label for="regname" class="col-sm-2 col-form-label">First Name: </label>
+	  <div class="col-3">
 		<input type="text"class="form-control" id ="regname"  name ="regname" placeholder="First Name"/>
 	 </div>
-	 </div>
-	 <div class="form-group row">
-	  <label for="regmi" class="col-sm-1 col-form-label"> Middle Inintial:</label>
-	   <div class="col-sm-4" >
-	  <input type="text" class="form-control" id="regmid" name="regmid"  placeholder="Middle Initial" />
+	  <label for="regmi" class="col-sm-1 col-form-label"> Middle Initial:</label>
+	   <div class="col-1" >
+	  <input type="text" class="form-control" id="regmid" name="regmid"   />
 	</div>
-	</div>
-	<div class="form-group row">
-	  <label for="reglast" class="col-sm-1 col-form-label"> Last Name:</label>
-	   <div class="col-sm-4">
+	  <label for="reglast" class="col-sm-2 col-form-label"> Last Name:</label>
+	   <div class="col-3">
 	  <input type="text" class="form-control" id="reglast" name="reglast" placeholder="Last Name"/>
 	  </div>
 	  </div>
 	<div class="form-group row">
-	 <label for="regdad" class="col-sm-1 col-form-label">Address:</label>
-	 <div class="col-sm-4">
+	 <label for="regdad" class="col-sm-2 col-form-label">Address</label>
+	 <div class="col-sm-10">
 		<input type ="text" name="regad" class="form-control"id="regad" placeholder="12345 Main St. Manila City">
 	</div>
 	</div>
 	<div class="form-group row">
-	 <label for="regEmail" class="col-sm-1 col-form-label"> Email: </label>
+	 <label for="regEmail" class="col-sm-2 col-form-label"> Email: </label>
 	 <div class="col-sm-4">
 	  <input type="email"class="form-control" name="regEmail" id="regEmail" placeholder="example1234@exam.com.ph">
 	</div>
-	</div>
-	<div class="form-group row">
-	 <label for="redpass" class="col-sm-1 col-form-label"> Username:</label>
+	 <label for="redpass" class="col-sm-2 col-form-label"> Username:</label>
 	   <div class="col-sm-4">
 		<input type="text" class ="form-control"name="reguser" id="reguser" placeholder="eclipser123">
 	</div>
 	</div>
 	<div class="form-group row">
-	 <label for="redpass" class="col-sm-1 col-form-label"> Password:</label>
+	 <label for="redpass" class="col-sm-2 col-form-label"> Password:</label>
 	   <div class="col-sm-4">
 		<input type="password" class ="form-control"name="regpass" id="regpass" placeholder="OneToOneHundredAngPassword">
 	</div>
-	</div><div class="form-group row">
-	 <label for="redpass" class="col-sm-1 col-form-label">Confirm Password:</label>
+	 <label for="redpass" class="col-sm-2 col-form-label">Confirm Password:</label>
 	   <div class="col-sm-4">
 		<input type="password" class ="form-control"name="confirmPass" id="confirmPass" placeholder="OneToOneHundredAngPassword">
 	</div>
 	</div>
 	  <fieldset class="form-group">
     <div class="row">
-	<legend class="col-form-label col-sm-1 pt-0">Sex</legend>
-      <div class="col-sm-10">
+	<legend class="col-form-label col-sm-2 pt-0">Sex</legend>
+      <div class="col-sm-1">
         <div class="form-check">
 		<input  type="radio"  name='sex' class="form-check-input"value="Male" >
 		<label class="form-check-label" for ="radio1">Male</label>
@@ -63,16 +60,13 @@
 		<label class="form-check-label" for ="radio2">Female</label>
 	</div>
 	</div>
-	</div>
-	</fieldset>
-	  <div class="form-group row">
-    <label for="regbday" class="col-sm-1 col-form-label">Birthday:</label>
-	<div class="col-sm-2">
+	  <label for="regbday" class="col-sm-2 col-form-label">Birthday:</label>
+	<div class="col-sm-3">
 	  <input type="date" class="form-control" name="regbday" id = "regbday">
 	</div>
-	</div>
-	<div class = "form-group row">
-		<label for="regcount" class="col-sm-1 col-form-label">Country </label>
+	
+ 
+		<label for="regcount" class="col-sm-2 col-form-label">Country </label>
 		<div class ="col-sm-2">
 		<select name="country" class="form-control" id = 'regcount'>
 			<option value="Afghanistan">Afghanistan</option>
@@ -322,10 +316,11 @@
 		</select>
 		</div>
 		</div>
+	</fieldset>
 	<fieldset class="form-group">
     <div class="row">
-	<legend class="col-form-label col-sm-1 pt-0">Register as Provider?</legend>
-      <div class="col-sm-10">
+	<legend class="col-form-label col-sm-3 pt-0">Register as Provider?</legend>
+      <div class="col-sm-1">
         <div class="form-check">
 		<input  type="radio"  name='choice' class="form-check-input"value="true" >
 		<label class="form-check-label" for ="radio1">Yes</label>
@@ -338,9 +333,14 @@
 	</div>
 	</fieldset>
 	
-	
-	<button class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;">REGISTER</button>
-
+	<div class="row justify-content-center">
+	<button class="btn mx-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;">REGISTER</button>
+		<input type="button" class ="btn btn-secondary" onclick="window.location.href='/login'" value="BACK TO LOGIN"></button>
+	</div>	
  </form>
+
  </div>
+</div>
+</div>
+</div>
 </div>

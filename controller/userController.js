@@ -10,7 +10,7 @@ exports.getUser = function(req,res){
 
 
     exports.registerUser = (req, res) => {
-      console.log(req.body);
+      const errors = validationResult(req);
   if (errors.isEmpty()) {
     const { regname, regmid,reglast,regad,regEmail,reguser, regpass,confirmPass,sex, regbday,country,choice  } = req.body;
   //Check user code
@@ -39,7 +39,6 @@ exports.getUser = function(req,res){
            count : country,
            prov : choice
          };
-         console.log(newUser);
          userModel.create(newUser, (err, user) => {
            if (err) {
              req.flash('error_msg', 'Could not create user. Please try again.');
