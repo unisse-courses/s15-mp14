@@ -1,67 +1,68 @@
 {{> nav}}
 {{> nav2}}
 <form id = "flightForm">
+     <div class= "container">
         <div class="form-group row">
-       <label for="credeptdate" class="col-sm-1 col-form-label"> Date of Departure:</label>
-        <div class="col-sm-2">
+       <label for="credeptdate" class="col-sm-2 col-form-label"> Date of Departure:</label>
+        <div class="col">
         <input type="date" class="form-control" name="deotdate" id = "credeptdate" ></input>
    </div>
-   </div>
-     <div class="form-group row">
-       <label for="credepttime" class="col-sm-1 col-form-label"> Time of dparture:</label>
-  <div class="col-sm-4">
+       <label for="credepttime" class="col-sm-2 col-form-label"> Time of dparture:</label>
+  <div class="col">
        <div class ="input-group bootstrap-timepicker timepicker">
         <input type="text"  class="form-control" id = "credepttime" >
-         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
    </div>
    </div>
-   </div>
-         <div class="form-group row">
-       <label for="credeptair" class="col-sm-1 col-form-label">Departing Airport</label>
-       <div class="col-sm-4">
+        </div>
+        <div class="form-group row">
+       <label for="credeptair" class="col-sm-2 col-form-label">Departing Airport</label>
+       <div class="col-10">
         <input type="text" name="deptair" class="form-control" id = "credeptair" placeholder="Ex: Nonoy Aquino International Airport"></input>
+    </div>     
     </div>
-    </div>
-
+     
        <div class="form-group row">
-       <label for="crearrdate" class="col-sm-1 col-form-label">Date of Arrival</label>
-       <div class="col-sm-2">
+       <label for="crearrdate" class="col-sm-2 col-form-label">   Date of Arrival :  </label>
+       <div class="col">
         <input type="date" name="arrdate"class="form-control"  id = "crearrdate" placeholder=></input>
        </div>
-       </div>
-        <div class="form-group row">
-       <label for="crearrtime" class="col-sm-1 col-form-label">Time of Arrival</label>
-       <div class="col-sm-4">
+       <label for="crearrtime" class="col-sm-2 col-form-label">Time of Arrival:</label>
+       <div class="col">
             <div class ="input-group bootstrap-timepicker timepicker">
         <input type="text" name="arrtime" class="form-control" id = "crearrtime" ></input>
-            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
     </div>
     </div>
-    </div>
+       </div>
         <div class="form-group row">
-       <label for="crearrport" class="col-sm-1 col-form-label">Airport of Arrival</label>
-       <div class="col-sm-4">
+       <label for="crearrport" class="col-sm-2 col-form-label">Airport of Arrival</label>
+       <div class="col-10">
         <input type="text" name="arrport"  class="form-control" id = "crearrport" placeholder="Osaka Airport"></input>
    </div>
    </div>
      <div class="form-group row">
-       <label for="creflightnum" class="col-sm-1 col-form-label">Desired flight number:</label>
-       <div class="col-sm-4">
+       <label for="creflightnum" class="col-sm-2 col-form-label">Desired flight number:</label>
+       <div class="col">
         <input type="text" name="arrport"  class="form-control" id = "creflightnum" placeholder="DLS_U234"></input>
    </div>
-   </div>
-               <div class="form-group row">
-         <label for="crecomp" class="col-sm-1 col-form-label"> Compnay </label>
-        <div class="col-sm-2">
+
+         <label for="crecomp" class="col-sm-1.5 col-form-label"> Compnay </label>
+        <div class="col">
         <input type="text" class="form-control" name="crecomp" id = "crecomp" placeholder="Yao Airlines" ></input>
    </div>
-   </div>
-      <div class="form-group row">
-         <label for="creplane" class="col-sm-1 col-form-label"> Plane Number </label>
-        <div class="col-sm-2">
+ 
+         <label for="creplane" class="col-sm-1.5 col-form-label"> Plane Number </label>
+        <div class="col">
         <input type="text" class="form-control" name="crecomp" id = "creplane" placeholder="EXT_3452"></input>
    </div>
    </div>
+   <div class= "row justify-content-md-center">
+        <div class ="col-6">
    <button type="button" id="adddd" class="btn btn-primary">Add Flight</button>
+       <button type="button" onclick="window.location.href ='/admin-table'" class = "btn btn-secondary">BACK TO SCHEDULES</button>
+   <button type ="button" onclick="window.location.href ='/admin-home'" class = "btn btn-dark">BACK TO HOMEPAGE </button>
+</div>
+
+   </div>
+   </div>
     </form>
 

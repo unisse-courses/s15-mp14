@@ -10,18 +10,6 @@ exports.getUser = function(req,res){
 
 
     exports.registerUser = (req, res) => {
-        // 1. Validate request
-
-  // 2. If VALID, find if email exists in users
-  //      NEW USER (no results retrieved)
-  //        a. Hash password
-  //        b. Create user
-  //        c. Redirect to login page
-  //      EXISTING USER (match retrieved)
-  //        a. Redirect user to login page with error message.
-
-  // 3. If INVALID, redirect to register page with errors
-  const errors = validationResult(req);
       console.log(req.body);
   if (errors.isEmpty()) {
     const { regname, regmid,reglast,regad,regEmail,reguser, regpass,confirmPass,sex, regbday,country,choice  } = req.body;
@@ -99,10 +87,11 @@ exports.getUser = function(req,res){
                   req.session.name = user.username;
                   req.session.prov = user.prov;
                   console.log(req.session);
+
                   if(user.prov == true)
-                  res.redirect('/admin-table');
+                  res.redirect('/admin-home');
                   else if(user.prov == false)
-                  res.redirect('/client-table');
+                  res.redirect('/client-home');
                 } else {
                   // passwords don't match
                   req.flash('error_msg', 'Incorrect Credentials. Please try again.');

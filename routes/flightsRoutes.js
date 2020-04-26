@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { isPrivate } = require('../middlewares/checkSession');
 
 const flightsController = require('../controller/flightsController');
 
@@ -12,12 +13,12 @@ router.post('/searchFlight',flightsController.getFlight);
 
 router.post('/addFlight', flightsController.createFlight);
 
-router.get('/CreateFlights', flightsController.AddForm);
+router.get('/CreateFlights', isPrivate,flightsController.AddForm);
 
-router.get('/admin-home',flightsController.Home);
+router.get('/admin-home',isPrivate,flightsController.Home);
 
-router.get('/admin-table', flightsController.flightList);
+router.get('/admin-table', isPrivate,flightsController.flightList);
 
-router.get('/EditFlights', flightsController.editForm);
+router.get('/EditFlights', isPrivate,flightsController.editForm);
 
 module.exports = router;
