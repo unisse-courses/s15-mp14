@@ -10,27 +10,34 @@ const BookingSchema = new mongoose.Schema({
 });
 const bookingModel = mongoose.model('bookings', BookingSchema);
 
-exports.create = function(flighta,fclass,adult,child,infant,next){
+exports.create = function(user,flighta,fclass,adult,child,infant,next){
     var booking = new bookingModel({ 
-        flight : flighta,
+    user: user,
+    flight : flighta,
     fclass : fclass,
     adult : adult,
     child : child,
     infant : infant
 });
-    bookingModel.save(function(err,result){
+    booking.save(function(err,result){
         if(err) throw err
         next(result);
     })
 }
 
 exports.findAll = function(accnum, next){
-    bookingModel.find({user: accnum}).sort({flightnum:1}),populate('flight').exec(function(err, result){
-        if (err) throw err;
+    bookingModel.find({user: accnum}).populate('flight').exec(function(err, result){
+        console.log(result);
         var bookingObjects = [];
         result.forEach(function(doc){
             bookingObjects.push(doc.toObject());
         });
         next(bookingObjects);
+    })
+}   
+
+exports.delete = function(accnum,next){
+    bookingModel.deleteMany({user:accnum},(err,result) =>{
+        next(result);
     })
 }

@@ -1,34 +1,5 @@
-
 $(document).ready(function(){
-    $('#login-form').on('click','#login-btn',function(){
-         var username = $('#username').val();
-        var password = $('#password').val();
 
-        localStorage.setItem('username', username);
-    
-    
-    $.post('searchUser', {username:username},function(data,status){
-        console.log(data);
-        var name = data[0].username;
-        var pass = data[0].password;
-        console.log(name);
-        console.log(pass);
-        var prov = data[0].prov;
-        if (username == name && password == pass && prov == true) {
-            localStorage.setItem("login", 1);
-            checkIfLoggedIn();
-        }
-        else if (username == name && password == pass && prov == false) {
-            localStorage.setItem("login", 1);
-            checkIfuserLoggedIn();
-        }
-        else {
-            $('#login-error').show();
-            $('#username').val("");
-            $('#password').val("");
-        }
-    });
-    });
     
     $('#show-password-btn').on('click', function() {
         $(this).find('i').toggleClass('fa fa-eye').toggleClass('fa fa-eye-slash');
@@ -39,16 +10,31 @@ $(document).ready(function(){
         }
     });
     
-    //event handler for logout button
-    $('#logout-btn').click(function() {
-        //if clicked, then clear the login flag from localStorage with the key "login"
-        localStorage.removeItem("login");
-        localStorage.removeIteme("username");
-        //after clearing the "login" key, run the login check
-        //to redirect user to index.html, since the "login" flag from localStorage is now cleared or not 1
-        checkIfLoggedIn();
-        checkIfuserLoggedIn();
+   $('#clearB').on('click',function(){
+    Swal.fire({
+        title: 'Are you sure you want to delete All your current Bookings?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if(result.value)
+        {
+       $.post('deleteAllBookings',{}, (data,status) =>{
+        
+       });
+       Swal.fire({
+        title: 'Cleared!',
+        text: 'All Bookings has been cleared.',
+        type: 'success'
+         }).then( function(){
+         window.location.reload();
     });
+};
+})
+   });
 
     //making it obvious
     //To check this shit 
@@ -64,31 +50,6 @@ $(document).ready(function(){
 
 
 
-    function checkIfLoggedIn() {
-        var loginStatus = localStorage.getItem('login');
-        if (loginStatus == 1) {
-            if (!window.location.href.includes("/admin-home" )|| !window.location.href.includes("/admin-table") ||!window.location.href.includes("/EditFlights") || !window.location.href.includes("/CreateFlights" )) {
-                window.location.href = "/admin-home";
-            }
-    
-        } else {
-            if (window.location.href.includes("/") )
-                window.location.href = "/";
-            }
-        }
-    function checkIfuserLoggedIn() {
-        var loginStatus = localStorage.getItem('login');
-        if (loginStatus == 1) {
-            if (!window.location.href.includes("/client-home")) {
-                window.location.href = "/client-home";
-            }
-    
-        } else {
-            if (!window.location.href.includes("/")) {
-                window.location.href = "/";
-            }
-        }
-    }
     
     function addUserFlightData(data, userFlightList){
         var tablerow = document.createElement('tr');
@@ -132,16 +93,14 @@ $(document).ready(function(){
     $('#bookingForm').on('click','#addUserFlights',function(){
         //If available in database then add 
  
-
         var flightnum = $('#chonum').val();
         var fclass = $("#trv_class option:selected").val();
         var adults = $("#numAd option:selected").val();
         var child = $("#numChi option:selected").val();
         
-        var infa = $('#numIn').find(":selected").val();
-
+        var infa = $("#numIn option:selected").val();
+            console.log()
         var newUserFlight = {
-            username: localStorage.getItem('username'),
             flightnum: flightnum,
             fclass: fclass,
             adults: adults,
@@ -154,6 +113,7 @@ $(document).ready(function(){
 
             })
     });
+
 
         // $.get('getFlights', function(data, status){
         //     console.log(data);

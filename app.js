@@ -5,6 +5,7 @@ const handlebars = require('handlebars');
 const mongoose = require('./models/connection');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
 
@@ -21,7 +22,6 @@ const flightRoutes = require('./routes/flightsRoutes');
  app.listen(port, function() {
   console.log('App listening at port '  + port)
 });
-
 
 app.engine( 'hbs', exphbs({
     extname: 'hbs', 
@@ -46,7 +46,6 @@ app.use(session({
 }));
 
 app.use(flash());
-
 // Global messages vars
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
@@ -56,5 +55,5 @@ app.use((req, res, next) => {
 
 app.use('/', authRouter);
 app.use('/',indexRouter);
-// app.use('/', bookingRouter);
+app.use('/', bookingRouter);
 app.use('/',flightRoutes);

@@ -1,7 +1,7 @@
-{{> nav}}
+{{> nav  name=username}}
 {{> nav2}}
 <form id = "flightForm">
-     <div class= "container">
+     <div class= "container-fluid">
         <div class="form-group row">
        <label for="credeptdate" class="col-sm-2 col-form-label"> Date of Departure:</label>
         <div class="col">
@@ -56,13 +56,11 @@
    </div>
    </div>
    <div class= "row justify-content-md-center">
-        <div class ="col-6">
    <button type="button" id="adddd" class="btn btn-primary">Add Flight</button>
-       <button type="button" onclick="window.location.href ='/admin-table'" class = "btn btn-secondary">BACK TO SCHEDULES</button>
+       <button type="button" onclick="window.location.href ='/admin-table'" class = "btn btn-secondary mx-2">BACK TO SCHEDULES</button>
    <button type ="button" onclick="window.location.href ='/admin-home'" class = "btn btn-dark">BACK TO HOMEPAGE </button>
 </div>
 
-   </div>
    </div>
     </form>
 

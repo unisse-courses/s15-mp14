@@ -1,4 +1,4 @@
-{{> nav}}
+{{> nav name=username}}
 {{> client_nav}}
 <div class="tab-content" id="nav-tabContent">
 <div class="tab-pane fade show active" id="nav-charts" role="tabpanel"
@@ -91,10 +91,10 @@ aria-labelledby="nav-charts-tab">
 <td>{{this.depttime}}</td>
 <td>{{this.deptarea}}</td>
 
-<th>{{this.flightnum}}</th>
-<th>{{this.arrivdate}}</th>
-<th>{{this.arrivtime}}</th>
-<th>{{this.arrivport}}</th>
+<td>{{this.flightnum}}</th>
+<td>{{this.arrivdate}}</th>
+<td>{{this.arrivtime}}</th>
+<td>{{this.arrivport}}</th>
 {{/each}}
 </tr>
 </tbody>

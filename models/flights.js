@@ -26,14 +26,12 @@ exports.create = function (planeid,ddate,dtime,deptairport,adate,artime,aport,fl
           airplane: planeid
 });
 flight.save(function(err,result){
-    if(err) throw err 
-        next(result);
+        next(err,result);
 });
 };
 
 exports.find = function(fnum, next){
-    var pattern =  fnum;
-    flightsModel.find({"flightnum": pattern}, function(err, result){
+    flightsModel.findOne({flightnum: fnum}, function(err, result){
         if(err) throw err;
         next(result);
     })

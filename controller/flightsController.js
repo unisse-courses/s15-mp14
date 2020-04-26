@@ -1,8 +1,12 @@
 const flightModel = require('../models/flights');
+const moment = require('moment');
 const planeModel = require('../models/airplanes');
 exports.getFlight = function(req,res){
-    flightModel.findAll(function(result){
-        res.send(result);
+    flightModel.find(req.body.fnum,function(result){
+            
+        const date = new Date(result.deptdate);
+        const formatteddate1 = moment(date).format('YYYY-MM-DD');
+        res.send({result,formatteddate1})
     });
 };
 
@@ -17,8 +21,16 @@ exports.createFlight = function(req,res){
     arrivport= req.body.aport,
     flightnum=req.body.flight
 
-    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,flightnum,function(result){
-        res.send(result);
+    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,flightnum,function(err,result){
+        var resu;
+        if(err){
+            resu = {success: false, message:"Flight was not created"}
+            res.send(resu)
+        }else{
+            resu =  result={success:true, message:"Flight Created!"}
+            res.send(resu);
+        }
+        
     })
 });
 }
@@ -58,16 +70,16 @@ exports.flightList = function(req,res){
         result[i].deptdate = temp1.toDateString();
         result[i].arrivdate = temp2.toDateString();
         }
-        res.render('admin-table', {flights: result});
+        res.render('admin-table', {flights: result,  username: req.session.name});
     })
 }
 exports.AddForm = function(req,res){
-    res.render('flights');
+    res.render('flights', { username: req.session.name});
 }
 
 exports.Home= function(req,res){
-    res.render('admin-home');
+    res.render('admin-home', { username: req.session.name});
 }
 exports.editForm = function(req,res){
-    res.render('editflights');
+    res.render('editflights', { username: req.session.name});
 }

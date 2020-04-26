@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
     function addEditFlightDiv(item, parentDiv){
         var btnsubmit = document.createElement('button');
         var btndelete = document.createElement('button');
@@ -83,17 +84,16 @@ $(document).ready(function() {
             $(label6).text("Airport of Arrival");
             $(label7).text("Destination:");
             $(label8).text("Flight Number");
-        
-            $(input1).val(item.deptdate);
-            $(input2).val(item.arrivdate);
-            $(input3).val(item.depttime);
-            $(input4).val(item.arrivtime);
-            $(input5).val(item.deptarea);
-            $(input6).val(item.arrivport);
-            $(input7).val(item.desti);
-            $(input8).val(item.flightnum);
+            $(input1).val(item.formatteddate1);
+            $(input2).val(item.result.arrivdate);
+            $(input3).val(item.result.depttime);
+            $(input4).val(item.result.arrivtime);
+            $(input5).val(item.result.deptarea);
+            $(input6).val(item.result.arrivport);
+            $(input7).val(item.result.desti);
+            $(input8).val(item.result.flightnum);
             $(btnsubmit).text("Save Changes");
-            $(btndelete).text("Deleter Flight");
+            $(btndelete).text("Delete Flight");
             formGroup1.append(label);
             formGroup1.append(input1);
             formGroup2.append(label2);
@@ -182,41 +182,32 @@ $('#flightForm').on('click','#adddd',function(){
 $.post('addFlight', newFlight, function(data,status){
     if(data.success)
     {
-    alert(data.message)
-    console.log(data);
+    Swal.fire({
+        type: 'success',
+       title:  data.message,
+       animation: false,
+        customClass: "animated fadeInDown"
+    });
     window.location.assign("/admin-table");
     }
     else{
-        alert(data.message);
+        Swal.fire({
+            title:  (data.message),
+            type: 'error',
+            text: 'Make sure the Form is Filled',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Go back',
+          animation: false,
+          customClass: "animated fadeInDown"
+
+ 
+        })
     }
 
 });
 });
 
 
-    $('#planeForm').on('click','#addPlane',function(){
-            var comp = $("#crecomp").val();
-            var plane =$("#creplane").val();
-
-            var newplane = {
-                comp:comp,
-                plane: plane
-            };
-            $.post('addPlanes', newplane, function(data,status){
-                if(data.success)
-                {
-                alert(data.message)
-                window.location.assign("/admin-table");
-                }
-                else{
-                    alert(data.message);
-                }
-               
-            });
-
-        });
-    
-     
 
     $('#flight-table').DataTable();
     $('#burger-sales-by-specie-table').DataTable();
@@ -256,11 +247,10 @@ $.post('addFlight', newFlight, function(data,status){
             var flightContainer = $('#Flightsform');
             flightContainer.empty();
            
-            data.forEach((item,it) => {
-                addEditFlightDiv(item, flightContainer)
+                addEditFlightDiv(data, flightContainer)
             });
         });
-    });
+ 
     $('#Flightsform').on('click', '#btnedit', function() {
             var  ddate = $('#edtDate').val();
             var adate = $('#edtarrDate').val();
@@ -293,15 +283,34 @@ $.post('addFlight', newFlight, function(data,status){
         $('#Flightsform').on('click', '#btndelete', function() {
 
             var fnum = $('#edtflightnum').val();
-                num = {
-                    num:fnum
-                }
-            $.post('deleteFlight',num, function(data,status){
-                alert("Delete Successful!!");
-                $('#searchflight').val('');
+                var num =fnum;
+                Swal.fire({
+                    title: 'Are you sure you want to delete this Flight',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if(result.value)
+                    {
+                        $.post('deleteFlight',num, function(data,status){
+                    
+                   });
+                   Swal.fire({
+                    title: 'Cleared!',
+                    text: 'Flight',
+                    type: 'success'
+                     }).then( function(){
+                     window.location.reload();
+                });
+            };
+            })
+   
 
             });
-        });
+  
         //var r = //confirm("Clear data?");
         
         /* if (r == true) {  btn-search-flights
@@ -335,7 +344,7 @@ $.post('addFlight', newFlight, function(data,status){
               $.post('addFlight',formatted,function(data,staus){
                 if(data.success)
                 {
-                alert(data.message)
+                
                 window.location.assign("/admin-table");
                 }
                 else{
@@ -349,5 +358,5 @@ $.post('addFlight', newFlight, function(data,status){
             $('#clear').click(function(){
                 document.getElementById("uploader").value = "";
             });
-});
-   
+
+        });

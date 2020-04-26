@@ -1,4 +1,4 @@
-{{> nav}}
+{{> nav  name=username}}
 {{> client_nav}}
 <div class="tab-pane" id="nav-tables" role="tabpanel" aria-labelledby="nav-tables-tab">
     <br>
@@ -28,9 +28,9 @@
 {{#each bookings}}
 <tr>
     
-    <td>{{this.flight.deptdate}}</td>
-    <td>{{this.flight.depttime}}</td>
-    <td>{{this.flight.deptarea}}</td>
+    <th>{{this.flight.deptdate}}</th>
+    <th>{{this.flight.depttime}}</th>
+    <th>{{this.flight.deptarea}}</th>
 
 
     <th>{{this.flight.flightnum}}</th>
@@ -44,9 +44,9 @@
 {{/each}}
 <tr>
 
-    <td>March 3, 2019</td>
-    <td>12:00 AM</td>
-    <td>Ninony Aquino International Airport</td>
+    <th>March 3, 2019</td>
+    <th>12:00 AM</td>
+    <th>Ninony Aquino International Airport</td>
 
     <th>TIO_2684</th>
     <th>March 2,2020</th>
@@ -58,9 +58,9 @@
 </tr>
 
 <tr>
-    <td>March 3, 2019</td>
-    <td>11:00 AM</td>
-    <td>Ninony Aquino International Airport</td>
+    <th>March 3, 2019</td>
+    <th>11:00 AM</td>
+    <th>Ninony Aquino International Airport</td>
 
     <th>TIO_5498</th>
     <th>March 2,2020</th>
@@ -73,9 +73,9 @@
                 </tbody>
             </table>
         </div>
-        <button id='merge-button' type="button" class="btn mb-2 mr-2 rockwell"
+        <button id='clearB' type="button" class="btn mb-2 mr-2 rockwell"
             style="color: white;background-color: #b9b9b9; border-radius: 8px;">DELETE</button>
-        <button id='clear-button' type="button" class="btn mb-2 rockwell"
+        <button id='edit-button' type="button" class="btn mb-2 rockwell"
             style="color: white; background-color: #b9b9b9;border-radius: 8px;">EDIT</button>
 
     </div>
