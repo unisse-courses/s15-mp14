@@ -24,7 +24,27 @@ exports.create = function(user,flighta,fclass,adult,child,infant,next){
         next(result);
     })
 }
-
+exports.deleteone = function(flight,acc,next){
+    filter = {flight:flight,user:acc};
+    bookingModel.deleteOne(filter,(err,result)=>{
+        next(err,result);
+    })
+}
+exports.update = function(num,accnum,fclass,adult,child,infant,next){
+    var filter = {flight: num,user:accnum};
+    var update = {  
+        $set: {
+            fclass:fclass,
+            adult:adult,
+            child:child,
+            infant:infant
+        }
+    };
+        bookingModel.updateOne (filter,update,(err,result)=>{
+                if(err) throw err;
+                next(err,result);
+        });
+}
 exports.findAll = function(accnum, next){
     bookingModel.find({user: accnum}).populate('flight').exec(function(err, result){
         console.log(result);
@@ -38,6 +58,14 @@ exports.findAll = function(accnum, next){
 
 exports.delete = function(accnum,next){
     bookingModel.deleteMany({user:accnum},(err,result) =>{
+        next(result);
+    })
+}
+
+exports.find = function(accnum,fnum,next){
+    query = {user:accnum, flight:fnum};
+    bookingModel.findOne(query).populate('flight').exec(function(err,result){
+        if(err) throw err;
         next(result);
     })
 }

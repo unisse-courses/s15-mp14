@@ -27,7 +27,7 @@ exports.createFlight = function(req,res){
             resu = {success: false, message:"Flight was not created"}
             res.send(resu)
         }else{
-            resu =  result={success:true, message:"Flight Created!"}
+            resu = {success:true, message:"Flight Created!"}
             res.send(resu);
         }
         

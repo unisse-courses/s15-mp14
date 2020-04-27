@@ -310,7 +310,7 @@ $.post('addFlight', newFlight, function(data,status){
    
 
             });
-  
+
         //var r = //confirm("Clear data?");
         
         /* if (r == true) {  btn-search-flights

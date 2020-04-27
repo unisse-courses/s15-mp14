@@ -15,9 +15,9 @@ router.post('/addFlight', flightsController.createFlight);
 
 router.get('/CreateFlights', isPrivate,flightsController.AddForm);
 
-router.get('/admin-home',isPrivate,flightsController.Home);
+router.get('/Provider-Home',isPrivate,flightsController.Home);
 
-router.get('/admin-table', isPrivate,flightsController.flightList);
+router.get('/ListofFlights', isPrivate,flightsController.flightList);
 
 router.get('/EditFlights', isPrivate,flightsController.editForm);
 
