@@ -119,3 +119,11 @@ a {
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
 }
+
+.errorm {
+    font-size: 18px;
+    color: red;
+    background-color:rgba(255,0,0,0.35);
+    font-family: sans-serif;
+    font-style: bold;
+}

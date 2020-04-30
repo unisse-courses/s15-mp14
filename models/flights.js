@@ -31,8 +31,7 @@ flight.save(function(err,result){
 };
 
 exports.find = function(fnum, next){
-    flightsModel.findOne({flightnum: fnum}, function(err, result){
-        if(err) throw err;
+    flightsModel.findOne({flightnum: fnum}, function(err,result){
         next(result);
     })
 }

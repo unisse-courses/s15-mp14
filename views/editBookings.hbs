@@ -1,12 +1,22 @@
 {{> nav  name=username}}
 {{> client_nav}}
-<form id = "searchBookingform"   >
-<label for = "searchflight">Input the FLIGHT NUMBER of the booking you wish to edit:</label>
+<form id = "searchBookingform">
+    <div class = "container">
+         <div class= "row justify-content-md-center">
+<label class = "col-5"for = "searchflight">Input the FLIGHT NUMBER of the booking you wish to edit:</label>
+<div class="col-7">
 <input type ="text" id="searchflight" >
+<p class = "errorm" id = "berr1"></p>
+</div>
+         </div>
+  <div class= "row justify-content-md-center">
 <button id='btnsearchflights' type="button" >Search Booking</button>
-
-
+    
+</div>
+</div>
 </form>
 <label>Booking Details: </label>
+
+<p class = "errorm" id = "berr2"></p>
 <form id="BookingForm" >  
 </form>

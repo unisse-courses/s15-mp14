@@ -80,9 +80,9 @@ $(document).ready(function(){
 
             select4.add(x);
         }
-        $(select2).val(item.adult);
-        $(select3).val(item.child);
-        $(select4).val(item.infant);
+        $(select2).val(item.result.adult);
+        $(select3).val(item.result.child);
+        $(select4).val(item.result.infant);
         var x = document.createElement('option')
         $(x).text("First Class");
         $(x).val("First");
@@ -99,7 +99,7 @@ $(document).ready(function(){
 
             select1.add(x);
 
-            $(select1).val(item.fclass);
+            $(select1).val(item.result.fclass);
              $(label8).addClass('col-sm-2 col-form-label')
              $(label9).addClass('col-sm-1 col-form-label') 
              $(label10).addClass('col-sm-1 col-form-label')
@@ -163,14 +163,14 @@ $(document).ready(function(){
             $(label10).text("Adults:");
             $(label11).text("Children:");
             $(label12).text("Infants:");
-            
-            $(input1).val(item.flight.deptdate);
-            $(input2).val(item.flight.arrivdate);
-            $(input3).val(item.flight.depttime);
-            $(input4).val(item.flight.arrivtime);
-            $(input5).val(item.flight.deptarea);
-            $(input6).val(item.flight.arrivport);
-            $(input8).val(item.flight.flightnum);
+            console.log(item);
+            $(input1).val(item.formatteddate1);
+            $(input2).val(item.formatteddate2);
+            $(input3).val(item.result.flight.depttime);
+            $(input4).val(item.result.flight.arrivtime);
+            $(input5).val(item.result.flight.deptarea);
+            $(input6).val(item.result.flight.arrivport);
+            $(input8).val(item.result.flight.flightnum);
             $(btnsubmit).text("Save Changes");
             $(btndelete).text("Delete Flight");
             formGroup1.append(label);
@@ -272,14 +272,24 @@ $(document).ready(function(){
    });
    $('#searchBookingform').on('click', '#btnsearchflights', function(){
     var fnum = $('#searchflight').val();
-        console.log(fnum);
+      var go=  true;
+      if(fnum =='')
+      { 
+          go = false;
+          $('#searchflight').css("border-color","red");
+          $('#berr1').text("Flight number required");
+      }
+      if(go == true){
+        $('#berr1').text("");
+        $('#searchflight').css("border-color","white");
+
     $.post('searchBooking', {fnum:fnum},function(data, status){
-        console.log(data);
+        
         var flightContainer = $('#BookingForm');
         flightContainer.empty();
-       
         addEditBookingDiv(data, flightContainer)
         });
+    }
     });
 
     //making it obvious
@@ -307,10 +317,22 @@ $(document).ready(function(){
             infant: infant,
             num: num
         }
-        
+        var go = true;
+        if(adult == 0 && child == 0 && infant == 0)
+        {
+            go = false;
+            $('#berr2').text("Number of passengers booking cannot be 0")
+        }
+        if(adult == 0 &&( child > 0 || infant > 0))
+        {
+            go = false;
+            $('#berr2').text("An Adult is required to accompany child and infant")
+        }   
+    if(go == true)
+    {
 
         $.post('updateBooking', editBooking,function(data, status){
-
+         
             if(data.success)
             {
                 Swal.fire({
@@ -332,14 +354,15 @@ $(document).ready(function(){
                     confirmButtonText: 'OK!'
                 });
             }
+       
         });
+    }
     });
 
     $('#BookingForm').on('click', '#btndelete', function() {
 
         var fnum = $('#edtflightnum').val();
         
-        console.log(fnum);
             Swal.fire({
                 title: 'Are you sure you want to delete this Booking',
                 text: "You won't be able to revert this!",
@@ -356,7 +379,7 @@ $(document).ready(function(){
                });
                Swal.fire({
                 title: 'Cleared!',
-                text: 'Flight',
+                text: 'Flight has been deleted',
                 type: 'success'
                  }).then( function(){
                  window.location.reload();
@@ -371,14 +394,31 @@ $(document).ready(function(){
     
     $('#bookingForm').on('click','#addUserFlights',function(){
         //If available in database then add 
- 
+        var go = true;
         var flightnum = $('#chonum').val();
         var fclass = $("#trv_class option:selected").val();
         var adults = $("#numAd option:selected").val();
         var child = $("#numChi option:selected").val();
-        
         var infa = $("#numIn option:selected").val();
-            console.log()
+
+           if(flightnum == '')
+           {
+            $('#chonum').css("border-color","red");
+            go= false;
+            $('#error1').text("Flight number required");
+           }
+           if(adults == 0 && child == 0  && infa == 0)
+           {
+            go= false;
+            $('#error2').text("Number of passengers booking cannot be 0");
+           }
+           if(adults == 0 && (child > 0  || infa > 0))
+           {
+            go= false;
+            $('#error2').text("An adult is required to accompany child and infant");
+           }
+           if(go == true)
+           {
         var newUserFlight = {
             flightnum: flightnum,
             fclass: fclass,
@@ -386,20 +426,33 @@ $(document).ready(function(){
             child: child,
             infa: infa
         }
-            console.log(newUserFlight);
             $.post('addUserFlights', newUserFlight, function(data, status){
-                console.log(data);
+                if(data.success)
+            {
+                Swal.fire({
+                    title: 'You have successfully booked a Flight',
+                    text: "Go to Schedules to see your booked flights",
+                    type: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Great!'
+                }).then(function(){
+              $('#searchflight').val('');
+              window.location.reload()
+                });
+            }
+            else{
+                Swal.fire({     
+                    title: 'Booking failed ',
+                    text: 'Please make you inputed a valid flight number',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK!'
+                });
+            }
 
-            })
+            });
+        }
     });
 
 
-        // $.get('getFlights', function(data, status){
-        //     console.log(data);
-
-        //     var tablediv = $('£flightList');
-        //     data.forEach((item, i) =>{
-        //         addUserFlightData(item, tablediv);
-        //     });   
-        // })
 });

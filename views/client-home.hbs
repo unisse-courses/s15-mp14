@@ -11,6 +11,7 @@ aria-labelledby="nav-charts-tab">
    <label for="chonum" class="col-sm-1 col-form-label">Chosen flight number:</label>
    <div class="col-sm-4">
 <input type="text" name="chonum"  class="form-control" id = "chonum" placeholder="DLS_U234"></input>
+<p id= "error1"  class = "errorm"></p>
    </div>
    </div>
    <div class="form-group row">
@@ -21,7 +22,9 @@ aria-labelledby="nav-charts-tab">
 <option value="Business">Business</option>
 <option value="First">First</option>
 </select>
+
 </div>
+
    </div>
 <div>
 <p style="word-spacing:25px;">
@@ -62,6 +65,7 @@ aria-labelledby="nav-charts-tab">
 </select>
 </p>
 </div>
+<p id= "error2"  class = "errorm"></p>
 <button  type="button"class="btn mb-2 rockwell"style="color: white; background-color: #b9b9b9;border-radius: 8px;" id = "addUserFlights">Confirm booking</button>
 
 </form>
@@ -87,14 +91,14 @@ aria-labelledby="nav-charts-tab">
 <tbody id="datatable_client">
 {{#each flights}}
 <tr>
-<td>{{this.deptdate}}</td>
-<td>{{this.depttime}}</td>
-<td>{{this.deptarea}}</td>
+<th>{{this.deptdate}}</th>
+<th>{{this.depttime}}</th>
+<th>{{this.deptarea}}</th>
 
-<td>{{this.flightnum}}</th>
-<td>{{this.arrivdate}}</th>
-<td>{{this.arrivtime}}</th>
-<td>{{this.arrivport}}</th>
+<th>{{this.flightnum}}</th>
+<th>{{this.arrivdate}}</th>
+<th>{{this.arrivtime}}</th>
+<th>{{this.arrivport}}</th>
 {{/each}}
 </tr>
 </tbody>

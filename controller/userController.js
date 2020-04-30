@@ -88,7 +88,7 @@ exports.getUser = function(req,res){
                   console.log(req.session);
 
                   if(user.prov == true)
-                  res.redirect('/admin-home');
+                  res.redirect('/Provider-Home');
                   else if(user.prov == false)
                   res.redirect('/client-home');
                 } else {

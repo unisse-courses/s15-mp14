@@ -3,10 +3,20 @@ const moment = require('moment');
 const planeModel = require('../models/airplanes');
 exports.getFlight = function(req,res){
     flightModel.find(req.body.fnum,function(result){
-            
+  
+        if(result == null)
+            {
+            var  resu = {success: false}
+             console.log(resu);
+                res.send(resu)
+            }
+         else{
         const date = new Date(result.deptdate);
         const formatteddate1 = moment(date).format('YYYY-MM-DD');
-        res.send({result,formatteddate1})
+        const date2 = new Date(result.arrivdate);
+        const formatteddate2 = moment(date2).format('YYYY-MM-DD');
+        res.send({result,resu,formatteddate1,formatteddate2})
+    }
     });
 };
 
@@ -70,7 +80,7 @@ exports.flightList = function(req,res){
         result[i].deptdate = temp1.toDateString();
         result[i].arrivdate = temp2.toDateString();
         }
-        res.render('admin-table', {flights: result,  username: req.session.name});
+        res.render('ListOfFlights', {flights: result,  username: req.session.name});
     })
 }
 exports.AddForm = function(req,res){
@@ -78,7 +88,7 @@ exports.AddForm = function(req,res){
 }
 
 exports.Home= function(req,res){
-    res.render('admin-home', { username: req.session.name});
+    res.render('Provider-Home', { username: req.session.name});
 }
 exports.editForm = function(req,res){
     res.render('editflights', { username: req.session.name});

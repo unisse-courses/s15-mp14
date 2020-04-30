@@ -31,12 +31,9 @@ $(document).ready(function() {
              var input5 = document.createElement('input');
              var input6 = document.createElement('input');
 
-             var label7 = document.createElement('label');
              var label8 = document.createElement('label');
-             var input7 = document.createElement('input');
              var input8 = document.createElement('input');
 
-             $(label7).addClass('col-sm-2 col-form-label') 
              $(label8).addClass('col-sm-2 col-form-label')
             $(rowDiv).addClass("form-row");
             $(rowDiv2).addClass("form-row");
@@ -62,7 +59,6 @@ $(document).ready(function() {
             $(input4).addClass("form-control");
             $(input5).addClass("form-control");
             $(input6).addClass("form-control");
-            $(input7).addClass("form-control-plaintext");
             $(input8).addClass("form-control-plaintext");
 
 
@@ -72,7 +68,7 @@ $(document).ready(function() {
             $(input4).attr({type:'text',id:'edtarrtime'});
             $(input5).attr({type:'text',id:'edtport'});
             $(input6).attr({type:'text',id:'edtarrport'});
-            $(input7).attr({type:'text',id:'edtdesti','readonly':'readonly'});
+           
             $(input8).attr({type:'text',id:'edtflightnum', 'readonly':'readonly'});
 
 
@@ -82,15 +78,13 @@ $(document).ready(function() {
             $(label4).text("Arrival Time");
             $(label5).text("Airport of Departure");
             $(label6).text("Airport of Arrival");
-            $(label7).text("Destination:");
             $(label8).text("Flight Number");
             $(input1).val(item.formatteddate1);
-            $(input2).val(item.result.arrivdate);
+            $(input2).val(item.formatteddate2);
             $(input3).val(item.result.depttime);
             $(input4).val(item.result.arrivtime);
             $(input5).val(item.result.deptarea);
             $(input6).val(item.result.arrivport);
-            $(input7).val(item.result.desti);
             $(input8).val(item.result.flightnum);
             $(btnsubmit).text("Save Changes");
             $(btndelete).text("Delete Flight");
@@ -113,10 +107,8 @@ $(document).ready(function() {
             rowDiv2.append(formGroup3);
             rowDiv2.append(formGroup4);
 
-            groupcol.append(input7);
             groupcol2.append(input8);
 
-            grouprow.append(label7);
             grouprow.append(groupcol);
 
             grouprow2.append(label8);
@@ -126,10 +118,10 @@ $(document).ready(function() {
             rowDiv3.append(formGroup6);
 
             $(btnsubmit).addClass("btn  mb-2 mr-2 btn-primary");
-            $(btnsubmit).attr({id:"btnedit"});
+            $(btnsubmit).attr({id:"btnedit",type:"button"});
 
             $(btndelete).addClass("btn mb-2 mr-2 btn-primary");
-            $(btndelete).attr({id:"btndelete"});
+            $(btndelete).attr({id:"btndelete",type:"button"});
 
             parentDiv.append(grouprow);
             parentDiv.append(grouprow2);
@@ -153,7 +145,6 @@ $('#crearrtime').timepicker();
 
 
 $('#flightForm').on('click','#adddd',function(){
-    console.log("Heelloo")
     var deptdate = $('#credeptdate').val();
     var depttime = $("#credepttime").val();
     var deptair = $('#credeptair').val();
@@ -164,7 +155,65 @@ $('#flightForm').on('click','#adddd',function(){
     
     var comp = $('#crecomp').val();
     var flightnum = $('#creplane').val();
+    var go = true;
+    if(deptdate =='')
+    {
+        go = false;
+        $('#credeptdate').css("border-color","red");
+        $('#ferr4').text("Please select proper date");
 
+    }
+    if(arrdate == '')
+    {
+        go = false;
+        $('#crearrdate').css("border-color","red");
+        $('#ferr3').text("Please select proper date");
+    }
+    if(deptair == '')
+    {
+        $('#credeptair').css("border-color","red");
+    }
+    if(arrport == '')
+    {
+        $('#crearrport').css("border-color","red");
+    }
+    if(flight == '' &&  flight.includes('_') == false)
+    {
+        go = false;
+        $('#creflightnum').css("border-color","red");
+        $('#ferr5').text("Flight Number needs to include ' _ ' in it");
+
+    }
+    if(flightnum == '' &&  flightnum.includes('_')  == false)
+    {
+        go = false;
+        $('#creplane').css("border-color","red");
+        $('#ferr6').text("Plane Number needs to include ' _ ' in it");
+
+    }
+    if(comp == '')
+    {
+        go = false;
+        $('#crecomp').css("border-color","red");
+        $('#ferr6').text("Plane Number needs to include ' _ ' in it");
+
+    }
+
+
+    var a = comparetime(depttime,arrtime);
+    if(deptdate === arrdate && a == false )
+    {
+        go = false;
+        $('#ferr').text("Same day arrival flights cannot have lesser arrival time");
+    }
+    if(deptdate > arrdate)
+          {
+              go =false;
+              
+              $('#ferr').text("Departure date cannot be later than arrival date");
+          }
+    if(go == true)
+    {
     var newFlight = {
         ddate: deptdate,
         dtime :depttime,
@@ -178,7 +227,6 @@ $('#flightForm').on('click','#adddd',function(){
             PlaeNum: flightnum
         }
     };
-    console.log(newFlight);
 $.post('addFlight', newFlight, function(data,status){
     if(data.success)
     {
@@ -188,7 +236,7 @@ $.post('addFlight', newFlight, function(data,status){
        animation: false,
         customClass: "animated fadeInDown"
     });
-    window.location.assign("/admin-table");
+    window.location.assign("/ListofFlights");
     }
     else{
         Swal.fire({
@@ -205,6 +253,7 @@ $.post('addFlight', newFlight, function(data,status){
     }
 
 });
+}
 });
 
 
@@ -241,15 +290,65 @@ $.post('addFlight', newFlight, function(data,status){
    
     $('#searchFlightform').on('click', '#btnsearchflights', function(){
         var fnum = $('#searchflight').val();
-            console.log(fnum);
+        var go = true;
+        if(fnum == '' )
+        {
+                go = false;
+                $('#ferr1').text("Please input valid flight number")
+                $("#searchflight").css("border-color","red");
+        }
+        if(go == true)
+        {
         $.post('searchFlight', {fnum:fnum},function(data, status){
-            console.log(data);
+            if(data.success == false)
+            {
+                $('#ferr1').text("Please input valid flight number")
+                $("#searchflight").css("border-color","red");
+            }
+            else{
+                
+                $("#searchflight").css("border-color","black");
+                
+                $('#ferr1').empty();
+
             var flightContainer = $('#Flightsform');
             flightContainer.empty();
            
                 addEditFlightDiv(data, flightContainer)
+        }
             });
+        }   
         });
+        function comparetime (time1,time2)
+        {
+            time1 = time1.split(" ");
+            var time = time1[0].split(":");
+            var hr = time[0];
+            if(time1[1] == "PM" && hr<12)
+            hr = parseInt(hr) + 12
+
+            time2 = time2.split(" ");
+            var time2_time = time2[0].split(":");
+            var time2_hr = time2_time[0];
+            if(time2[1] == "PM" && hr<12)
+            time2_hr = parseInt(hr) + 12
+
+            if(hr > time2_hr)
+            return false;
+
+            else if(time2_hr > hr)
+            return true
+
+            else if(time2_hr == hr)
+            {
+                if(time[1] < time2_time[1])
+                return true;
+
+                else
+                return false;
+            }
+                return false;
+        }
  
     $('#Flightsform').on('click', '#btnedit', function() {
             var  ddate = $('#edtDate').val();
@@ -259,6 +358,25 @@ $.post('addFlight', newFlight, function(data,status){
             var dport = $("#edtport").val();
             var aport = $('#edtarrport').val();
             var num = $('#edtflightnum').val();
+            var go = true;
+            console.log(dtime);
+            
+            console.log(atime);
+            var a = comparetime(dtime,atime);
+        if(adate ===  ddate && a == false)
+          {
+                go = false;
+                $('#ferr2').text("Same day arrival flights cannot have lesser arrival time");
+                return 0;
+          }
+          if(ddate > adate)
+          {
+              go =false;
+              
+              $('#ferr2').text("Departure date cannot be later than arrival date");
+          }
+          if(go == true)
+          {
             editflight  = {
                 ddate: ddate,
                 adate: adate,
@@ -274,11 +392,15 @@ $.post('addFlight', newFlight, function(data,status){
                 {
                     alert("Update Successful!!")
                   $('#searchflight').val('');
+                  $('#Flightsform').empty();
+                  
+                  $('#ferr2').empty();
                 }
                 else{
                     alert("Update Failed Please input Valid data");
                 }
             });
+        }
         });
         $('#Flightsform').on('click', '#btndelete', function() {
 
@@ -330,14 +452,12 @@ $.post('addFlight', newFlight, function(data,status){
          
          $('#upload').click(function(){
             var files = document.getElementById('uploaer').files;
-            console.log(files);
             if (files.length <= 0) {
                 return false;
               }
               var fr = new FileReader();
       
               fr.onload = function(e) { 
-              console.log(e);
                 var result = JSON.parse(e.target.result);
                 var formatted = JSON.stringify(result, null, 2);
                 
@@ -345,7 +465,7 @@ $.post('addFlight', newFlight, function(data,status){
                 if(data.success)
                 {
                 
-                window.location.assign("/admin-table");
+                window.location.assign("/ListofFlights");
                 }
                 else{
                     alert(data.message);

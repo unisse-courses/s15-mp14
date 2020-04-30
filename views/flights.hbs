@@ -1,16 +1,19 @@
 {{> nav  name=username}}
 {{> nav2}}
+<p class= "errorm" id="ferr"></p>
 <form id = "flightForm">
      <div class= "container-fluid">
         <div class="form-group row">
        <label for="credeptdate" class="col-sm-2 col-form-label"> Date of Departure:</label>
         <div class="col">
         <input type="date" class="form-control" name="deotdate" id = "credeptdate" ></input>
+    <p id= "ferr3"></p>
    </div>
        <label for="credepttime" class="col-sm-2 col-form-label"> Time of dparture:</label>
   <div class="col">
        <div class ="input-group bootstrap-timepicker timepicker">
         <input type="text"  class="form-control" id = "credepttime" >
+        
    </div>
    </div>
         </div>
@@ -18,6 +21,7 @@
        <label for="credeptair" class="col-sm-2 col-form-label">Departing Airport</label>
        <div class="col-10">
         <input type="text" name="deptair" class="form-control" id = "credeptair" placeholder="Ex: Nonoy Aquino International Airport"></input>
+
     </div>     
     </div>
      
@@ -25,6 +29,7 @@
        <label for="crearrdate" class="col-sm-2 col-form-label">   Date of Arrival :  </label>
        <div class="col">
         <input type="date" name="arrdate"class="form-control"  id = "crearrdate" placeholder=></input>
+           <p id= "ferr4"></p>
        </div>
        <label for="crearrtime" class="col-sm-2 col-form-label">Time of Arrival:</label>
        <div class="col">
@@ -43,6 +48,7 @@
        <label for="creflightnum" class="col-sm-2 col-form-label">Desired flight number:</label>
        <div class="col">
         <input type="text" name="arrport"  class="form-control" id = "creflightnum" placeholder="DLS_U234"></input>
+          <p id = "ferr5"></p>
    </div>
 
          <label for="crecomp" class="col-sm-1.5 col-form-label"> Compnay </label>
@@ -53,6 +59,7 @@
          <label for="creplane" class="col-sm-1.5 col-form-label"> Plane Number </label>
         <div class="col">
         <input type="text" class="form-control" name="crecomp" id = "creplane" placeholder="EXT_3452"></input>
+        <p id = "ferr6"></p>
    </div>
    </div>
    <div class= "row justify-content-md-center">
