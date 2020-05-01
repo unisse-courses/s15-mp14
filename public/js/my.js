@@ -34,23 +34,27 @@ $(document).ready(function() {
              var label8 = document.createElement('label');
              var input8 = document.createElement('input');
 
+             var label9 = document.createElement('label');
+             var input9= document.createElement('input');
+
              $(label8).addClass('col-sm-2 col-form-label')
+             $(label9).addClass('col-sm-2 col-form-label')
             $(rowDiv).addClass("form-row");
             $(rowDiv2).addClass("form-row");
             $(rowDiv3).addClass("form-row");
             
             $(grouprow).addClass("form-group row");
             $(grouprow2).addClass("form-group row");
-            $(formGroup1).addClass("form-group col-md-3");
-            $(formGroup2).addClass("form-group col-md-3");
-            $(formGroup3).addClass("form-group col-md-3");
-            $(formGroup4).addClass("form-group col-md-3");
-            $(formGroup5).addClass("form-group col-md-3");
-            $(formGroup6).addClass("form-group col-md-3");
+            $(formGroup1).addClass("form-group col-md-6");
+            $(formGroup2).addClass("form-group col-md-6");
+            $(formGroup3).addClass("form-group col-md-6");
+            $(formGroup4).addClass("form-group col-md-6");
+            $(formGroup5).addClass("form-group col-md-6");
+            $(formGroup6).addClass("form-group col-md-6");
 
             
-            $(groupcol).addClass("col-sm-5");
-            $(groupcol2).addClass("col-sm-5");
+            $(groupcol).addClass("col-sm-6");
+            $(groupcol2).addClass("col-sm-3");
 
             
             $(input1).addClass("form-control");
@@ -60,7 +64,7 @@ $(document).ready(function() {
             $(input5).addClass("form-control");
             $(input6).addClass("form-control");
             $(input8).addClass("form-control-plaintext");
-
+            $(input9).addClass(" col-4 form-control");
 
             $(input1).attr({type:'Date',id:'edtDate'});
             $(input2).attr({type:'Date',id:'edtarrDate'});
@@ -70,6 +74,8 @@ $(document).ready(function() {
             $(input6).attr({type:'text',id:'edtarrport'});
            
             $(input8).attr({type:'text',id:'edtflightnum', 'readonly':'readonly'});
+            $(input9).attr({type:'Number',id:'edtPassen', min:"20", max:"180"});
+            
 
 
             $(label).text("Departure Date");
@@ -79,6 +85,7 @@ $(document).ready(function() {
             $(label5).text("Airport of Departure");
             $(label6).text("Airport of Arrival");
             $(label8).text("Flight Number");
+            $(label9).text("Num. Passengers (20-180)");
             $(input1).val(item.formatteddate1);
             $(input2).val(item.formatteddate2);
             $(input3).val(item.result.depttime);
@@ -86,6 +93,8 @@ $(document).ready(function() {
             $(input5).val(item.result.deptarea);
             $(input6).val(item.result.arrivport);
             $(input8).val(item.result.flightnum);
+            
+            $(input9).val(item.result.passengers);
             $(btnsubmit).text("Save Changes");
             $(btndelete).text("Delete Flight");
             formGroup1.append(label);
@@ -113,7 +122,8 @@ $(document).ready(function() {
 
             grouprow2.append(label8);
             grouprow2.append(groupcol2);
-
+            grouprow2.append(label9);
+            grouprow2.append(input9);
             rowDiv3.append(formGroup5);
             rowDiv3.append(formGroup6);
 
@@ -143,7 +153,6 @@ $('#credepttime').timepicker();
 $('#crearrtime').timepicker();
 
 
-
 $('#flightForm').on('click','#adddd',function(){
     var deptdate = $('#credeptdate').val();
     var depttime = $("#credepttime").val();
@@ -152,10 +161,15 @@ $('#flightForm').on('click','#adddd',function(){
     var arrtime = $("#crearrtime").val();
     var arrport = $("#crearrport").val();
     var flight = $('#creflightnum').val();
-    
+    var Passen = $('#numPasse').val();
     var comp = $('#crecomp').val();
     var flightnum = $('#creplane').val();
     var go = true;
+    if(Passen == '' || Passen <20 || Passen >180){
+        go = false
+        $('#ferr7').text("Please Select a number between 20 and 180 ");
+        
+    }
     if(deptdate =='')
     {
         go = false;
@@ -221,6 +235,7 @@ $('#flightForm').on('click','#adddd',function(){
         adate: arrdate,
         artime: arrtime,
         aport: arrport,
+        passenger: Passen,
         flight: flight,
         port:  {
             Company:comp,
@@ -235,8 +250,11 @@ $.post('addFlight', newFlight, function(data,status){
        title:  data.message,
        animation: false,
         customClass: "animated fadeInDown"
-    });
+    }).then(function(){
+
+    
     window.location.assign("/ListofFlights");
+    });
     }
     else{
         Swal.fire({
@@ -330,14 +348,15 @@ $.post('addFlight', newFlight, function(data,status){
             time2 = time2.split(" ");
             var time2_time = time2[0].split(":");
             var time2_hr = time2_time[0];
-            if(time2[1] == "PM" && hr<12)
-            time2_hr = parseInt(hr) + 12
+            if(time2[1] == "PM" && time2_hr<12)
+            time2_hr = parseInt(time2_hr) + 12
 
+      
             if(hr > time2_hr)
             return false;
 
             else if(time2_hr > hr)
-            return true
+            return true;
 
             else if(time2_hr == hr)
             {
@@ -347,7 +366,7 @@ $.post('addFlight', newFlight, function(data,status){
                 else
                 return false;
             }
-                return false;
+            
         }
  
     $('#Flightsform').on('click', '#btnedit', function() {
@@ -357,12 +376,24 @@ $.post('addFlight', newFlight, function(data,status){
             var atime = $('#edtarrtime').val();
             var dport = $("#edtport").val();
             var aport = $('#edtarrport').val();
+            
             var num = $('#edtflightnum').val();
             var go = true;
-            console.log(dtime);
-            
-            console.log(atime);
+            var passen = $('#edtPassen').val();
+            console.log(passen);
             var a = comparetime(dtime,atime);
+           
+            if(passen == '' || passen > 180 || passen < 20)
+            
+            {
+                go = false;
+                $('#ferr2').append("Number of Passengers should be between 20 and 180")
+            }
+            if(aport == '' || dport == '')
+            {
+                go = false;
+                $('#ferr2').append("Please don't leave a blank in the form");
+            }
         if(adate ===  ddate && a == false)
           {
                 go = false;
@@ -383,6 +414,7 @@ $.post('addFlight', newFlight, function(data,status){
                 dtime: dtime,
                 atime: atime,
                 dport: dport,
+                passen: passen,
                 aport: aport,
                 num:num
             }
@@ -433,22 +465,6 @@ $.post('addFlight', newFlight, function(data,status){
 
             });
 
-        //var r = //confirm("Clear data?");
-        
-        /* if (r == true) {  btn-search-flights
-            
-            $(input1).attr({type:'Date',id:'edtDate'});
-            $(input2).attr({type:'Date',id:'edtarrDate'});
-            $(input3).attr({type:'text',id:'edttime'});
-            $(input4).attr({type:'text',id:'edtarrtime'});
-            $(input5).attr({type:'text',id:'edtport'});
-            $(input6).attr({type:'text',id:'edtarrport'});
-            $(input7).attr({type:'text',id:'edtdesti','readonly':'readonly'});
-            $(input8).attr({type:'text',id:'edtflightnum', 'readonly':'readonly'});
-             localStorage.removeItem('charts_data');
-             refreshTables();
-             refreshCharts();
-         }*/
          
          $('#upload').click(function(){
             var files = document.getElementById('uploaer').files;

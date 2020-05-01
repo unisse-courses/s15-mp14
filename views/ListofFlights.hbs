@@ -13,26 +13,28 @@
             <th>Date of Departure</th>
             <th>Time of Departure</th>
             <th>Aiport of Departure</th>
-            <th>Flight number</th>
-            <th>Company</th>
+
             <th>Date of Arrival</th>
             <th>Time of Arrival</th>
             <th>Aiport of Arrival</th>
             <th>Flight number</th>
+            <th>Max. Passengers</th>
+            <th>Current # of Passengers</th>
         </tr>
  </thead>   
       {{#each flights}}
         <tr>
-            <td>{{this.airplane.Company}}</td>
-            <td>{{this.deptdate}}</td>
-            <td>{{this.depttime}}</td>
-            <td>{{this.deptarea}}</td>
-            <td>{{this.flightnum}}</td>
-            <td>{{this.airplane.Company}}</td>
-            <td>{{this.arrivdate}}</td>
-            <td>{{this.arrivtime}}</td>
-            <td>{{this.arrivport}}</td>
-            <td>{{this.flightnum}}</td>
+            <th>{{this.airplane.Company}}</th>
+            <th>{{this.depthate}}</th>
+            <th>{{this.depttime}}</th>
+            <th>{{this.deptarea}}</th>
+
+            <th>{{this.arrivdate}}</th>
+            <th>{{this.arrivtime}}</th>
+            <th>{{this.arrivport}}</th>
+            <th>{{this.flightnum}}</th>
+            <th>{{this.passengers}}</th>
+            <th>{{this.curpassen}}</th>
         </tr>
 {{/each}} 
 </table>

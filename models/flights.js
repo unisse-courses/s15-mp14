@@ -7,13 +7,15 @@ const FlightSchema = new mongoose.Schema({
 arrivtime: { type : String, required : true},
 arrivport: {type:String, required:true},
 flightnum: {type:String, required:true},
+passengers :{type: Number, required:true},
+curpassen: {type: Number, default: 0},
 airplane: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 });
 
 const flightsModel = mongoose.model('flight', FlightSchema);
 
-exports.create = function (planeid,ddate,dtime,deptairport,adate,artime,aport,flight, next){
+exports.create = function (planeid,ddate,dtime,deptairport,adate,artime,aport,passenger,flight, next){
 
  var flight = new flightsModel ({
           deptdate: ddate,
@@ -22,6 +24,7 @@ exports.create = function (planeid,ddate,dtime,deptairport,adate,artime,aport,fl
           arrivdate: adate,
           arrivtime: artime,
           arrivport: aport,
+          passengers : passenger,
           flightnum:flight,
           airplane: planeid
 });
@@ -44,7 +47,7 @@ exports.findtable = function(next){
         next(flightObjects);
     })
 }
-exports.update = function(fnum,ddate,dtime,darea,adate,atime,aport,next){
+exports.update = function(fnum,ddate,dtime,darea,adate,atime,aport,passen,next){
     var filter =  {flightnum: fnum};
     var update = {
         $set : {
@@ -53,6 +56,7 @@ exports.update = function(fnum,ddate,dtime,darea,adate,atime,aport,next){
             deptarea: darea,
             arrivdate: adate,
             arrivtime: atime,
+            passengers:passen,
             arrivport: aport
           }
     };

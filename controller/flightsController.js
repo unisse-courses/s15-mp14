@@ -21,17 +21,18 @@ exports.getFlight = function(req,res){
 };
 
 exports.createFlight = function(req,res){
+
     planeModel.findNUpdate(req.body.port,function(result){
-        const planeid = result._id;
+      
+    const planeid = result._id;
     var deptdate= req.body.ddate,
     depttime= req.body.dtime,
     deptarea= req.body.deptairport,
     arrivdate= req.body.adate,
-    arrivtime= req.body.artime,
+    arrivtime= req.body.artime,         
     arrivport= req.body.aport,
     flightnum=req.body.flight
-
-    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,flightnum,function(err,result){
+    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,req.body.passenger,flightnum,function(err,result){
         var resu;
         if(err){
             resu = {success: false, message:"Flight was not created"}
@@ -53,8 +54,8 @@ exports.updateFlight = function(req,res){
     var adate = req.body.adate;
     var atime = req.body.atime;
     var aport = req.body.aport;
-
-    flightModel.update(fnum,ddate,dtime,darea,adate,atime,aport, function(result){
+    var passen = req.body.passen;
+    flightModel.update(fnum,ddate,dtime,darea,adate,atime,aport,passen, function(result){
         res.send(result);
     })
 }
