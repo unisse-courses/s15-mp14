@@ -242,6 +242,7 @@ $('#flightForm').on('click','#adddd',function(){
             PlaeNum: flightnum
         }
     };
+    
 $.post('addFlight', newFlight, function(data,status){
     if(data.success)
     {
