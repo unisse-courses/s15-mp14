@@ -12,7 +12,6 @@ exports.createBooking = function(req,res){
         child = req.body.child,
         infant = req.body.infa
         var newsu = parseInt(result.curpassen) + parseInt(adult) + parseInt(child) + parseInt(infant);
-        console.log(newsu);
         if(newsu > result.passengers)
         {
             resu = {success: false, message:"users"}
@@ -20,13 +19,14 @@ exports.createBooking = function(req,res){
         }
         else{
         bookingModel.create(req.session.user,flighta,fclass,adult,child,infant,function(err,result2){
-           flightModel.updatepassen(flighta,newsu,function(err,result3){
-           });
-            
+           
+           
         if(err){
             resu = {success: false, message :"flight"}
             res.send(resu)
         }else{
+            flightModel.updatepassen(flighta,newsu,function(err,result3){
+            });
             resu = {success:true}
             res.send(resu);
         }
@@ -43,10 +43,21 @@ exports.createBooking = function(req,res){
 exports.updateBooking = function(req,res){
     flightModel.find(req.body.num,function(result){
         const fnum = result._id;
+        bookingModel.find(req.session.user,fnum,(result2) => {
+            var sum = parseInt(result.curpassen) - parseInt(result2.adult) - parseInt(result2.child) - parseInt(result2.infant) + parseInt(req.body.adult) + parseInt(req.body.child) + parseInt(req.body.infant);
+        
+            if(sum > result.passengers)
+            {
+                resu = {success: false, message:"users"}
+            res.send(resu);
+            }
+            else{
+            flightModel.updatepassen(fnum,sum,function(result){ });
+      
         bookingModel.update(fnum,req.session.user,req.body.fclass,req.body.adult,req.body.child,req.body.infant, function(err,result){
             var resu;
         if(err){
-            resu = {success: false}
+            resu = {success: false, message:"flights"}
             res.send(err,resu)
         }else{
             resu = {success:true}
@@ -54,13 +65,19 @@ exports.updateBooking = function(req,res){
         }
         
         })
+    }
+});
     })
 }
 
 exports.deleteBooking = function(req,res){
     flightModel.find(req.body.num,function(result){
-
+       
         const fnum= result._id;
+        bookingModel.find(req.session.user,fnum,(result2) => {
+            var sum = parseInt(result.curpassen) - parseInt(result2.adult) - parseInt(result2.child) - parseInt(result2.infant);
+            flightModel.updatepassen(fnum,sum,function(result){ });
+        });
         bookingModel.deleteone(fnum,req.session.user, function(err,result){
             var resu;
         if(err){
@@ -76,7 +93,6 @@ exports.deleteBooking = function(req,res){
     }
     exports.flightList = function(req,res){
         flightModel.findtable(function(result){
-            console.log(result);
         for(var i =0; i< result.length; i++)
         {
          var temp1 = new Date(result[i].deptdate);
@@ -114,15 +130,30 @@ exports.deleteAll = (req,res) => {
 
 exports.searchBooking = (req,res) =>{
     flightModel.find(req.body.fnum,function(result){
-        const flightid = result._id;
-    
+        
+        if(result == null)
+        {
+            var resu = {sucess :false};
+            res.send(resu);
+        }
+        else{
+            const flightid = result._id;
     bookingModel.find(req.session.user,flightid,(result)=>{
-        console.log(result);
-        const date = new Date(result.flight.deptdate);
+        if(result == null)
+        {
+            var resu = {sucess :false};
+            res.send(resu);
+        }
+        else {
+     
+            const date = new Date(result.flight.deptdate);
         const formatteddate1 = moment(date).format('YYYY-MM-DD');
         const date2 = new Date(result.flight.arrivdate);
         const formatteddate2 = moment(date2).format('YYYY-MM-DD');
         res.send({result,formatteddate1,formatteddate2})
+        
+    }
     });
+}
 });
 }

@@ -15,8 +15,7 @@ exports.getUser = function(req,res){
     const { regname, regmid,reglast,regad,regEmail,reguser, regpass,confirmPass,sex, regbday,country,choice  } = req.body;
   //Check user code
     userModel.getOne({ username : reguser }, (err, result) => {
-      if (result) {
-        console.log(result);
+      if (result) { 
         // found a match, return to login with error
         req.flash('error_msg', 'User already exists. Please login.');
         res.redirect('/login');
@@ -85,7 +84,6 @@ exports.getUser = function(req,res){
                   req.session.user = user._id;
                   req.session.name = user.username;
                   req.session.prov = user.prov;
-                  console.log(req.session);
 
                   if(user.prov == true)
                   res.redirect('/Provider-Home');

@@ -8,7 +8,6 @@ exports.getFlight = function(req,res){
         if(result == null)
             {
             var  resu = {success: false}
-             console.log(resu);
                 res.send(resu)
             }
          else{
@@ -33,17 +32,30 @@ exports.createFlight = function(req,res){
     arrivtime= req.body.artime,         
     arrivport= req.body.aport,
     flightnum=req.body.flight
-    flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,req.body.passenger,flightnum,function(err,result){
-        var resu;
-        if(err){
-            resu = {success: false, message:"Flight was not created"}
+
+    flightModel.find(flightnum,function(result){
+        if(result != null)
+        {
+            var resu;
+            resu = {success: false, message:"Existing Flight number found"}
             res.send(resu)
-        }else{
-            resu = {success:true, message:"Flight Created!"}
-            res.send(resu);
         }
-        
-    })
+        else{
+            flightModel.create(planeid,deptdate,depttime,deptarea,arrivdate,arrivtime,arrivport,req.body.passenger,flightnum,function(err,result){
+                var resu;
+                if(err){
+                    resu = {success: false, message:"Flight was not created"}
+                    res.send(resu)
+                }else{
+                    resu = {success:true, message:"Flight Created!"}
+                    res.send(resu);
+                }   
+                
+            });
+        }
+
+    });
+    
 });
 }
 
@@ -63,8 +75,13 @@ exports.updateFlight = function(req,res){
 
 exports.deleteone = function(req,res){
     fnum = req.body.num;
-    bookingModel.deleteBookings(fnum, function(result){
-    }); 
+    flightModel.find(fnum, function(result){
+        
+        bookingModel.deleteBookings(result._id, function(result){
+            console.log(result);
+        }); 
+    });
+    
     flightModel.delete(fnum,function(result){
         
         res.send(result);

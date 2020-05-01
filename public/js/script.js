@@ -284,11 +284,20 @@ $(document).ready(function(){
         $('#searchflight').css("border-color","white");
 
     $.post('searchBooking', {fnum:fnum},function(data, status){
-        
+        if(data.sucess == false)
+        {
+            $('#berr1').text("Flight numbeer not found")
+             $("#searchflight").css("border-color","red");
+        }
+        else {
+
+       
         var flightContainer = $('#BookingForm');
         flightContainer.empty();
         addEditBookingDiv(data, flightContainer)
+    }
         });
+   
     }
     });
 
@@ -345,7 +354,7 @@ $(document).ready(function(){
               window.location.reload()
                 });
             }
-            else{
+            else if(!data.success   && data.message == "flights"){
                 Swal.fire({     
                     title: 'Update Vailed',
                     text: 'Please input Valid data',
@@ -353,6 +362,15 @@ $(document).ready(function(){
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK!'
                 });
+            }
+            else if(!data.success  && data.message == "users"){
+                Swal.fire({
+                    title: 'Insufficient space',
+                    text: "The current flight you want to book has insufficient space",
+                    type: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK!'
+                })
             }
        
         });

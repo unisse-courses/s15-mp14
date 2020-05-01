@@ -437,7 +437,6 @@ $.post('addFlight', newFlight, function(data,status){
         $('#Flightsform').on('click', '#btndelete', function() {
 
             var fnum = $('#edtflightnum').val();
-                var num =fnum;
                 Swal.fire({
                     title: 'Are you sure you want to delete this Flight',
                     text: "You won't be able to revert this!",
@@ -449,7 +448,7 @@ $.post('addFlight', newFlight, function(data,status){
                 }).then((result) => {
                     if(result.value)
                     {
-                        $.post('deleteFlight',num, function(data,status){
+                        $.post('deleteFlight',{num:fnum}, function(data,status){
                     
                    });
                    Swal.fire({

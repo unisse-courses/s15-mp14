@@ -21,7 +21,7 @@ exports.create = function(user,flighta,fclass,adult,child,infant,next){
 });
     booking.save(function(err,result){
         if(err) throw err
-        next(result);
+        next(err,result);
     })
 }
 exports.deleteone = function(flight,acc,next){
@@ -67,7 +67,7 @@ exports.deleteAll = function(next){
     })
 }
 exports.deleteBookings = function(flightnum, next){
-    bookingModel.deleteMany({_id:flightnum},(err,result)=>{
+    bookingModel.deleteMany({flight:flightnum},(err,result)=>{
         next(result)
     })
 }
