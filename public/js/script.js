@@ -400,6 +400,9 @@ $(document).ready(function(){
         var adults = $("#numAd option:selected").val();
         var child = $("#numChi option:selected").val();
         var infa = $("#numIn option:selected").val();
+        var sum = adults + child + infa;
+
+
 
            if(flightnum == '')
            {
@@ -424,7 +427,8 @@ $(document).ready(function(){
             fclass: fclass,
             adults: adults,
             child: child,
-            infa: infa
+            infa: infa,
+            sum : sum
         }
             $.post('addUserFlights', newUserFlight, function(data, status){
                 if(data.success)
@@ -440,14 +444,23 @@ $(document).ready(function(){
               window.location.reload()
                 });
             }
-            else{
+            else if (!data.sucess && data.message == "flight"){
                 Swal.fire({     
                     title: 'Booking failed ',
-                    text: 'Please make you inputed a valid flight number',
+                    text: 'The Flight number you entered does not exists',
                     type: 'error',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK!'
                 });
+            }
+            else if(!data.sucess && data.message == "users"){
+                Swal.fire({
+                    title: 'Insufficient space',
+                    text: "The current flight you want to book has insufficient space",
+                    type: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK!'
+                })
             }
 
             });

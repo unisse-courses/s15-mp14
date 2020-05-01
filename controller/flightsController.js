@@ -1,6 +1,7 @@
 const flightModel = require('../models/flights');
 const moment = require('moment');
 const planeModel = require('../models/airplanes');
+const bookingModel = require('../models/bookings');
 exports.getFlight = function(req,res){
     flightModel.find(req.body.fnum,function(result){
   
@@ -62,15 +63,21 @@ exports.updateFlight = function(req,res){
 
 exports.deleteone = function(req,res){
     fnum = req.body.num;
-
+    bookingModel.deleteBookings(fnum, function(result){
+    }); 
     flightModel.delete(fnum,function(result){
+        
         res.send(result);
-    })
+    });
+
 }
 exports.deleteAll = function(req,res){
+    bookingModel.deleteAll(function(result){
+    });
     flightModel.deleteAll(function(result){
         res.send(result);
     })
+
 }
 exports.flightList = function(req,res){
     flightModel.findtable(function(result){

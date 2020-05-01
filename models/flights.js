@@ -8,7 +8,7 @@ arrivtime: { type : String, required : true},
 arrivport: {type:String, required:true},
 flightnum: {type:String, required:true},
 passengers :{type: Number, required:true},
-curpassen: {type: Number, default: 0},
+curpassen: {type: Number,default: 0},
 airplane: {type: mongoose.Schema.Types.ObjectId, ref: 'planes'}
 
 });
@@ -66,8 +66,21 @@ exports.update = function(fnum,ddate,dtime,darea,adate,atime,aport,passen,next){
     })
 }
 
+exports.updatepassen = function(fnum, passen,next){
+    var filter = {_id : fnum};
+    var update = {
+        $set:{
+        curpassen: passen
+        }
+    };
+    flightsModel.updateOne(filter,update,function(err,result){
+        if(err) throw err;
+        next(result);
+});
+}
+
 exports.delete = function(fnum, next){
-    filter = {flightnum: fnum};
+    var filter = {flightnum : fnum};
     flightsModel.deleteOne(filter,function(err,result){
         if(err) throw err;
     

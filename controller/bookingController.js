@@ -2,24 +2,42 @@ const bookingModel = require("../models/bookings");
 const moment = require('moment');
 const flightModel = require("../models/flights");
 exports.createBooking = function(req,res){
-   
+    var resu;
     flightModel.find(req.body.flightnum,function(result){
+        if(result != null)
+        {
         const flighta = result._id;
         var fclass = req.body.fclass,
         adult = req.body.adults,
         child = req.body.child,
         infant = req.body.infa
-        bookingModel.create(req.session.user,flighta,fclass,adult,child,infant,function(err,result){
-            var resu;
+        var newsu = parseInt(result.curpassen) + parseInt(adult) + parseInt(child) + parseInt(infant);
+        console.log(newsu);
+        if(newsu > result.passengers)
+        {
+            resu = {success: false, message:"users"}
+            res.send(resu);
+        }
+        else{
+        bookingModel.create(req.session.user,flighta,fclass,adult,child,infant,function(err,result2){
+           flightModel.updatepassen(flighta,newsu,function(err,result3){
+           });
+            
         if(err){
-            resu = {success: false}
+            resu = {success: false, message :"flight"}
             res.send(resu)
         }else{
             resu = {success:true}
             res.send(resu);
         }
         });
-
+    }
+}
+    else
+    {
+        resu = {success:false, message :"flight"};
+        res.send(resu);
+    }
 });
 }
 exports.updateBooking = function(req,res){
@@ -52,12 +70,13 @@ exports.deleteBooking = function(req,res){
             resu = {success:true}
             res.send(resu);
         }
-        
+            
+            })
         })
-    })
-}
-exports.flightList = function(req,res){
-    flightModel.findtable(function(result){
+    }
+    exports.flightList = function(req,res){
+        flightModel.findtable(function(result){
+            console.log(result);
         for(var i =0; i< result.length; i++)
         {
          var temp1 = new Date(result[i].deptdate);
@@ -72,6 +91,7 @@ exports.flightList = function(req,res){
 
 exports.fillTable = function(req,res){
     bookingModel.findAll(req.session.user,function(result){
+   
         for(var i =0; i< result.length; i++)
         {
          var temp1 = new Date(result[i].flight.deptdate);

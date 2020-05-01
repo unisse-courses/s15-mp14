@@ -47,7 +47,7 @@ exports.update = function(num,accnum,fclass,adult,child,infant,next){
 }
 exports.findAll = function(accnum, next){
     bookingModel.find({user: accnum}).populate('flight').exec(function(err, result){
-        console.log(result);
+  
         var bookingObjects = [];
         result.forEach(function(doc){
             bookingObjects.push(doc.toObject());
@@ -59,6 +59,16 @@ exports.findAll = function(accnum, next){
 exports.delete = function(accnum,next){
     bookingModel.deleteMany({user:accnum},(err,result) =>{
         next(result);
+    })
+}
+exports.deleteAll = function(next){
+    bookingModel.deleteMany({},function(err,result){
+        next(result);
+    })
+}
+exports.deleteBookings = function(flightnum, next){
+    bookingModel.deleteMany({_id:flightnum},(err,result)=>{
+        next(result)
     })
 }
 
