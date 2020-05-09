@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-const databaseURL = 'mongodb://localhost:27017/flightsdb';
+const { dbURL} = require('../config');
 
 
 const options = { useNewUrlParser: true,
@@ -8,6 +7,6 @@ const options = { useNewUrlParser: true,
     useFindAndModify: false };
 
 
-mongoose.connect(databaseURL, options)
+mongoose.connect(dbURL, options)
 
 module.exports = mongoose;

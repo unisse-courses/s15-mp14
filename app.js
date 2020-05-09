@@ -9,8 +9,14 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
 
+const options = { useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false };
+const { envPort, sessionKey } = require('./config');
+
+
 const app = express();
-const port = 3000;
+const port = envPort || 9090;
 
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
@@ -37,8 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(express.static('public'));
 
+
 app.use(session({
-  secret: 'somegibberishsecret',
+  secret: sessionKey,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   resave: false,
   saveUninitialized: true,
