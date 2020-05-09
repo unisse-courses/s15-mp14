@@ -5,6 +5,7 @@ const handlebars = require('handlebars');
 const mongoose = require('./models/connection');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const dotenv = require('dotenv');
 
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
