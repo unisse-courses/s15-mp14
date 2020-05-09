@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #for deployment 
-.env
+.env"node_modules" 
