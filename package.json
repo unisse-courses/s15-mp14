@@ -25,7 +25,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon  -r dotenv/config app.js",
-    "debug":"nodemon -r dotenv/config app.js"
+    "debug": "nodemon -r dotenv/config app.js"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,7 @@
     "url": "https://github.com/unisse-courses/s15-mp14/issues"
   },
   "homepage": "https://github.com/unisse-courses/s15-mp14#readme",
-  "engines":{"node": "12.x"}
+  "engines": {
+    "node": "12.x"
+  }
 }
